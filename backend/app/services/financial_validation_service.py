@@ -163,24 +163,14 @@ def _validate_invoice(
 
     checks: list[dict] = []
 
-
-
     for idx, item in enumerate(
         line_items,
         start=1,
     ):
 
-        quantity = item.get(
-            "quantity"
-        )
-
-        unit_price = item.get(
-            "unit_price"
-        )
-
-        amount = item.get(
-            "amount"
-        )
+        quantity = item.get("quantity")
+        unit_price = item.get("unit_price")
+        amount = item.get("amount")
 
         calculated = (
             round(
@@ -197,15 +187,12 @@ def _validate_invoice(
                 name=f"line_item_{idx}_check",
                 formula="quantity * unit_price",
                 operand_values={
-                    "quantity_x_unit_price":
-                        calculated
+                    "quantity_x_unit_price": calculated,
                 },
                 reported=amount,
                 period=None,
             )
         )
-
- 
 
     valid_amounts = [
         item.get("amount")
@@ -222,7 +209,6 @@ def _validate_invoice(
     )
 
     if valid_amounts:
-
         line_items_total = round(
             sum(valid_amounts),
             2,
@@ -233,15 +219,12 @@ def _validate_invoice(
                 name="line_items_sum_to_subtotal",
                 formula="sum(line_item.amount)",
                 operand_values={
-                    "sum_of_line_items":
-                        line_items_total
+                    "sum_of_line_items": line_items_total,
                 },
                 reported=subtotal,
                 period=None,
             )
         )
-
-
 
     tax = _field_value(
         fields,
@@ -258,26 +241,46 @@ def _validate_invoice(
         "total_amount",
     )
 
-    discount_value = (
-        discount
-        if discount is not None
-        else 0
-    )
-
-    checks.append(
-        _build_check(
-            name="invoice_total_check",
-            formula="subtotal + tax_amount - discount",
-            operand_values={
-                "subtotal": subtotal,
-                "tax_amount": tax,
-                "discount": -discount_value,
-            },
-            reported=total,
-            period=None,
+    if (
+        subtotal is not None
+        and tax is not None
+        and total is not None
+        and discount is not None
+    ):
+        checks.append(
+            _build_check(
+                name="invoice_total_check",
+                formula="subtotal + tax_amount - discount",
+                operand_values={
+                    "subtotal": subtotal,
+                    "tax_amount": tax,
+                    "discount": -discount,
+                },
+                reported=total,
+                period=None,
+            )
         )
-    )
-
+    else:
+        checks.append(
+            {
+                "name": "invoice_total_check",
+                "formula": "subtotal + tax_amount - discount",
+                "operands": {
+                    "subtotal": subtotal,
+                    "tax_amount": tax,
+                    "discount": discount,
+                },
+                "calculated_value": None,
+                "reported_value": total,
+                "variance": None,
+                "status": "NOT_APPLICABLE",
+                "period": None,
+                "message": (
+                    "Invoice total cannot be deterministically "
+                    "validated from the available fields."
+                ),
+            }
+        )
 
     cash_paid = _field_value(
         fields,
@@ -291,69 +294,55 @@ def _validate_invoice(
 
     if (
         cash_paid is not None
-        or change is not None
+        and total is not None
+        and change is not None
     ):
-
-        negative_total = (
-            -total
-            if total is not None
-            else None
+        expected_change = round(
+            cash_paid - total,
+            2,
         )
 
-        check = _build_check(
-            name="cash_change_check",
-            formula="cash_paid - total_amount",
-            operand_values={
-                "cash_paid": cash_paid,
-                "negative_total_amount":
-                    negative_total,
-            },
-            reported=change,
-            period=None,
+        variance = round(
+            expected_change - change,
+            2,
         )
 
-        if (
-            cash_paid is not None
-            and total is not None
-        ):
-
-            expected_change = round(
-                cash_paid - total,
-                2,
+        status = (
+            "PASS"
+            if _within_tolerance(
+                expected_change,
+                change,
             )
+            else "FAIL"
+        )
 
-            check["calculated_value"] = (
-                expected_change
-            )
-
-            if change is not None:
-
-                check["variance"] = round(
-                    expected_change - change,
-                    2,
-                )
-
-                check["status"] = (
-                    "PASS"
-                    if _within_tolerance(
-                        expected_change,
-                        change,
-                    )
-                    else "FAIL"
-                )
-
-                if check["status"] == "FAIL":
-                    check["message"] = (
+        checks.append(
+            {
+                "name": "cash_change_check",
+                "formula": "cash_paid - total_amount",
+                "operands": {
+                    "cash_paid": cash_paid,
+                    "negative_total_amount": -total,
+                },
+                "calculated_value": expected_change,
+                "reported_value": change,
+                "variance": variance,
+                "status": status,
+                "period": None,
+                "message": (
+                    None
+                    if status == "PASS"
+                    else (
                         "Extracted change does not match "
                         "cash paid minus invoice total: "
                         f"expected {expected_change}, "
                         f"reported {change}."
                     )
-
-        checks.append(check)
+                ),
+            }
+        )
 
     return checks
-
 
 def _validate_balance_sheet(
     extracted: dict,
