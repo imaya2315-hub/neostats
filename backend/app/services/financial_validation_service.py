@@ -260,20 +260,49 @@ def _validate_invoice(data: dict) -> list[dict]:
     discount = num(value("discount"))
     total = num(value("total_amount"))
 
-    if subtotal is not None and tax is not None and total is not None:
-        effective_discount = discount if discount is not None else 0.0
+if subtotal is not None and total is not None:
+    effective_discount = discount if discount is not None else 0.0
 
-        calculated_total = round(
+    calculated_before_tax = round(
+        subtotal - effective_discount,
+        2
+    )
+
+    calculated_with_tax = None
+
+    if tax is not None:
+        calculated_with_tax = round(
             subtotal + tax - effective_discount,
             2
         )
 
-        variance = round(
-            calculated_total - total,
-            2
-        )
+    if abs(calculated_before_tax - total) <= 0.05:
+        calculated_total = calculated_before_tax
+        variance = round(calculated_total - total, 2)
 
-        status = "PASS" if abs(variance) <= 0.05 else "FAIL"
+        checks.append({
+            "name": "invoice_total_check",
+            "formula": "subtotal - discount",
+            "operands": {
+                "subtotal": subtotal,
+                "tax_amount": tax,
+                "discount": effective_discount,
+            },
+            "calculated_value": calculated_total,
+            "reported_value": total,
+            "variance": variance,
+            "status": "PASS",
+            "period": None,
+            "message": (
+                "Tax appears to be included in the reported subtotal/total."
+            ),
+        })
+
+    elif calculated_with_tax is not None and abs(
+        calculated_with_tax - total
+    ) <= 0.05:
+        calculated_total = calculated_with_tax
+        variance = round(calculated_total - total, 2)
 
         checks.append({
             "name": "invoice_total_check",
@@ -286,107 +315,67 @@ def _validate_invoice(data: dict) -> list[dict]:
             "calculated_value": calculated_total,
             "reported_value": total,
             "variance": variance,
-            "status": status,
+            "status": "PASS",
             "period": None,
             "message": None,
         })
+
     else:
+        calculated_total = (
+            calculated_with_tax
+            if calculated_with_tax is not None
+            else calculated_before_tax
+        )
+
+        variance = round(
+            calculated_total - total,
+            2
+        )
+
         checks.append({
             "name": "invoice_total_check",
             "formula": "subtotal + tax_amount - discount",
             "operands": {
                 "subtotal": subtotal,
                 "tax_amount": tax,
-                "discount": discount,
+                "discount": effective_discount,
             },
-            "calculated_value": None,
+            "calculated_value": calculated_total,
             "reported_value": total,
-            "variance": None,
-            "status": "NOT_APPLICABLE",
+            "variance": variance,
+            "status": "FAIL",
             "period": None,
             "message": (
-                "Invoice total cannot be deterministically "
-                "validated from the available fields."
+                f"Invoice total does not match calculated total: "
+                f"expected {calculated_total}, reported {total}."
             ),
         })
 
-    cash_paid = num(value("cash_paid"))
-    change = num(value("change"))
-
-    if cash_paid is not None and total is not None:
-        calculated_change = round(
-            cash_paid - total,
-            2
+        issues.append(
+            f"invoice_total_check: reported {total} vs "
+            f"calculated {calculated_total} "
+            f"(variance {variance})"
         )
 
-        if change is not None:
-            variance = round(
-                calculated_change - change,
-                2
-            )
-
-            status = (
-                "PASS"
-                if abs(variance) <= 0.05
-                else "FAIL"
-            )
-
-            message = None
-
-            if status == "FAIL":
-                message = (
-                    f"Extracted change does not match cash paid "
-                    f"minus invoice total: expected "
-                    f"{calculated_change}, reported {change}."
-                )
-
-            checks.append({
-                "name": "cash_change_check",
-                "formula": "cash_paid - total_amount",
-                "operands": {
-                    "cash_paid": cash_paid,
-                    "total_amount": total,
-                },
-                "calculated_value": calculated_change,
-                "reported_value": change,
-                "variance": variance,
-                "status": status,
-                "period": None,
-                "message": message,
-            })
-        else:
-            checks.append({
-                "name": "cash_change_check",
-                "formula": "cash_paid - total_amount",
-                "operands": {
-                    "cash_paid": cash_paid,
-                    "total_amount": total,
-                },
-                "calculated_value": calculated_change,
-                "reported_value": None,
-                "variance": None,
-                "status": "NOT_APPLICABLE",
-                "period": None,
-                "message": "Change is not present.",
-            })
-    else:
-        checks.append({
-            "name": "cash_change_check",
-            "formula": "cash_paid - total_amount",
-            "operands": {
-                "cash_paid": cash_paid,
-                "total_amount": total,
-            },
-            "calculated_value": None,
-            "reported_value": change,
-            "variance": None,
-            "status": "NOT_APPLICABLE",
-            "period": None,
-            "message": (
-                "Required field(s) not present in document: "
-                "cash_paid or total_amount"
-            ),
-        })
+else:
+    checks.append({
+        "name": "invoice_total_check",
+        "formula": "subtotal + tax_amount - discount",
+        "operands": {
+            "subtotal": subtotal,
+            "tax_amount": tax,
+            "discount": discount,
+        },
+        "calculated_value": None,
+        "reported_value": total,
+        "variance": None,
+        "status": "NOT_APPLICABLE",
+        "period": None,
+        "message": (
+            "Invoice total cannot be deterministically "
+            "validated from the available fields."
+        ),
+    })
 
     return checks
 
