@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document Intelligence Platform</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Document Intelligence Platform</h1>
+    <a class="back-link" href="/docs" target="_blank">API docs ↗</a>
+  </header>
+
+  <main>
+    <section class="panel">
+      <p class="section-title">Upload a document</p>
+      <form id="upload-form" class="upload-form">
+        <select id="document-type" required>
+          <option value="invoice">Invoice</option>
+          <option value="balance_sheet">Balance Sheet</option>
+          <option value="profit_and_loss">Profit &amp; Loss</option>
+          <option value="cash_flow_statement">Cash Flow Statement</option>
+        </select>
+        <input id="file-input" type="file" accept=".pdf,.jpg,.jpeg,.png" required />
+        <button type="submit">Process document</button>
+      </form>
+      <p id="upload-status" class="muted" style="margin-top:10px;"></p>
+    </section>
+
+    <section class="panel">
+      <p class="section-title">Processed documents</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Confidence</th>
+            <th>Processed at</th>
+          </tr>
+        </thead>
+        <tbody id="doc-rows"></tbody>
+      </table>
+      <p id="empty-state" class="empty-state" style="display:none;">No documents processed yet.</p>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

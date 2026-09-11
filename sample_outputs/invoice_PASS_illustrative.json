@@ -1,0 +1,68 @@
+{
+  "_note": "ILLUSTRATIVE example of the expected response shape for a PASS invoice once ANTHROPIC_API_KEY is configured. Not produced by a live model call.",
+  "document_name": "sample_invoice.pdf",
+  "document_type": "invoice",
+  "processing_status": "PASS",
+  "overall_confidence": 0.97,
+  "file_validation": {
+    "file_type": "application/pdf",
+    "is_supported": true,
+    "is_readable": true,
+    "page_count": 1,
+    "status": "PASS"
+  },
+  "extracted_data": {
+    "fields": {
+      "invoice_number": {"value": "INV-23891", "source_text": "Invoice No: INV-23891", "page_number": 1},
+      "invoice_date": {"value": "2026-08-15", "source_text": "Date: 15 Aug 2026", "page_number": 1},
+      "vendor_name": {"value": "ABC Technologies", "source_text": "ABC Technologies Pvt. Ltd.", "page_number": 1},
+      "customer_name": {"value": "Orion Retail LLP", "source_text": "Bill To: Orion Retail LLP", "page_number": 1},
+      "currency": {"value": "USD", "source_text": "USD", "page_number": 1},
+      "subtotal": {"value": 12500.00, "source_text": "Subtotal: USD 12,500.00", "page_number": 1},
+      "tax_amount": {"value": 625.00, "source_text": "Tax (5%): USD 625.00", "page_number": 1},
+      "discount": {"value": 0.00, "source_text": null, "page_number": null},
+      "total_amount": {"value": 13125.00, "source_text": "Total Amount Due: USD 13,125.00", "page_number": 1}
+    },
+    "line_items": [
+      {"description": "Service A - Consulting", "quantity": 1, "unit_price": 12500.00, "amount": 12500.00, "page_number": 1}
+    ],
+    "statement_line_items": [],
+    "period_headers": []
+  },
+  "validation": {
+    "checks": [
+      {
+        "name": "line_items_sum_to_subtotal",
+        "formula": "sum(line_item.amount)",
+        "operands": {"sum_of_line_items": 12500.00},
+        "calculated_value": 12500.00,
+        "reported_value": 12500.00,
+        "variance": 0.00,
+        "status": "PASS",
+        "period": null,
+        "message": null
+      },
+      {
+        "name": "invoice_total_check",
+        "formula": "subtotal + tax_amount - discount",
+        "operands": {"subtotal": 12500.00, "tax_amount": 625.00, "discount": 0.00},
+        "calculated_value": 13125.00,
+        "reported_value": 13125.00,
+        "variance": 0.00,
+        "status": "PASS",
+        "period": null,
+        "message": null
+      }
+    ],
+    "overall_status": "PASS",
+    "issues": []
+  },
+  "processing_metadata": {
+    "ocr_used": false,
+    "processed_at": "2026-09-10T12:00:00.000Z",
+    "processing_time_ms": 2840,
+    "pages_processed": 1,
+    "llm_model": "claude-sonnet-4-6",
+    "warnings": []
+  }
+}

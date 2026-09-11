@@ -1,0 +1,25 @@
+{
+  "document_name": "X51005806685.jpg",
+  "document_type": "invoice",
+  "processing_status": "FAILED",
+  "overall_confidence": null,
+  "file_validation": {
+    "file_type": "image/jpeg",
+    "is_supported": true,
+    "is_readable": true,
+    "page_count": 1,
+    "status": "PASS"
+  },
+  "extracted_data": null,
+  "validation": null,
+  "processing_metadata": {
+    "ocr_used": true,
+    "processed_at": "2026-09-10T16:23:20.397Z",
+    "processing_time_ms": 1533,
+    "pages_processed": 1,
+    "llm_model": null,
+    "warnings": [
+      "LLM_NOT_CONFIGURED: ANTHROPIC_API_KEY is not set; field extraction cannot run."
+    ]
+  }
+}

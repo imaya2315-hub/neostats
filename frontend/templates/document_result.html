@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ document_name }} — Document Intelligence Platform</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1 id="doc-title">{{ document_name }}</h1>
+    <a class="back-link" href="/">&larr; Back to dashboard</a>
+  </header>
+
+  <main id="content">
+    <p class="muted">Loading…</p>
+  </main>
+
+  <script>
+    const DOCUMENT_NAME = {{ document_name | tojson }};
+
+    function badge(status) {
+      return `<span class="badge ${status}">${status}</span>`;
+    }
+
+    function renderFields(fields) {
+      if (!fields || Object.keys(fields).length === 0) return '<p class="muted">No fields extracted.</p>';
+      let rows = "";
+      for (const [name, f] of Object.entries(fields)) {
+        const missing = f.value === null || f.value === undefined;
+        const value = missing ? "— not found —" : (typeof f.value === "object" ? JSON.stringify(f.value) : f.value);
+        rows += `<tr>
+          <td>${name}</td>
+          <td class="${missing ? 'field-value missing' : ''}">${value}</td>
+          <td class="muted">${f.page_number ?? "—"}</td>
+          <td class="muted">${f.confidence != null ? f.confidence : "—"}</td>
+        </tr>`;
+      }
+      return `<table><thead><tr><th>Field</th><th>Value</th><th>Page</th><th>Confidence</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function renderLineItems(items) {
+      if (!items || items.length === 0) return "";
+      let rows = items.map(i => `<tr>
+          <td>${i.description ?? "—"}</td>
+          <td>${i.quantity ?? "—"}</td>
+          <td>${i.unit_price ?? "—"}</td>
+          <td>${i.amount ?? "—"}</td>
+        </tr>`).join("");
+      return `<p class="section-title">Line items</p>
+        <table><thead><tr><th>Description</th><th>Qty</th><th>Unit price</th><th>Amount</th></tr></thead>
+        <tbody>${rows}</tbody></table>`;
+    }
+
+    function renderStatementItems(items) {
+      if (!items || items.length === 0) return "";
+      const periods = [...new Set(items.flatMap(i => Object.keys(i.values || {})))];
+      const headerCells = periods.map(p => `<th>${p}</th>`).join("");
+      const rows = items.map(i => {
+        const cells = periods.map(p => `<td>${i.values && i.values[p] != null ? i.values[p] : "—"}</td>`).join("");
+        return `<tr><td>${i.label}</td>${cells}</tr>`;
+      }).join("");
+      return `<p class="section-title">Statement line items</p>
+        <table><thead><tr><th>Label</th>${headerCells}</tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function renderValidation(validation) {
+      if (!validation) return '<p class="muted">No validation performed.</p>';
+      const rows = (validation.checks || []).map(c => `<tr>
+          <td>${c.name}${c.period ? ` (${c.period})` : ""}</td>
+          <td class="muted">${c.formula}</td>
+          <td>${c.calculated_value ?? "—"}</td>
+          <td>${c.reported_value ?? "—"}</td>
+          <td>${c.variance ?? "—"}</td>
+          <td>${badge(c.status)}</td>
+        </tr>`).join("");
+      return `<p>Overall: ${badge(validation.overall_status)}</p>
+        <table><thead><tr><th>Check</th><th>Formula</th><th>Calculated</th><th>Reported</th><th>Variance</th><th>Status</th></tr></thead>
+        <tbody>${rows}</tbody></table>`;
+    }
+
+    async function load() {
+      const content = document.getElementById("content");
+      try {
+        const res = await fetch(`/api/v1/documents/${encodeURIComponent(DOCUMENT_NAME)}`);
+        if (!res.ok) {
+          const body = await res.json();
+          content.innerHTML = `<div class="panel"><p class="field-value missing">${body.error ? body.error.message : "Document not found."}</p></div>`;
+          return;
+        }
+        const doc = await res.json();
+        const extracted = doc.extracted_data || {};
+
+        content.innerHTML = `
+          <section class="panel">
+            <p class="section-title">Summary</p>
+            <p>Type: <strong>${doc.document_type}</strong> &nbsp; Status: ${badge(doc.processing_status)}
+               &nbsp; Confidence: ${doc.overall_confidence != null ? (doc.overall_confidence * 100).toFixed(1) + "%" : "—"}</p>
+            <p class="muted">File: ${doc.file_validation.file_type}, ${doc.file_validation.page_count} page(s) — ${badge(doc.file_validation.status)}</p>
+          </section>
+
+          <section class="panel">
+            <p class="section-title">Extracted fields</p>
+            ${renderFields(extracted.fields)}
+            ${renderLineItems(extracted.line_items)}
+            ${renderStatementItems(extracted.statement_line_items)}
+          </section>
+
+          <section class="panel">
+            <p class="section-title">Financial validation</p>
+            ${renderValidation(doc.validation)}
+          </section>
+
+          <section class="panel">
+            <p class="section-title">Raw JSON</p>
+            <pre class="json-view">${JSON.stringify(doc, null, 2)}</pre>
+          </section>
+        `;
+      } catch (err) {
+        content.innerHTML = '<div class="panel"><p class="field-value missing">Could not load this document.</p></div>';
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", load);
+  </script>
+</body>
+</html>

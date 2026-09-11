@@ -1,0 +1,28 @@
+{
+  "_note": "ILLUSTRATIVE example only — not produced by a live model call.",
+  "document_name": "Consolidated Cash Flow Statement 2023.pdf",
+  "document_type": "cash_flow_statement",
+  "processing_status": "PASS",
+  "overall_confidence": 0.90,
+  "file_validation": {"file_type": "application/pdf", "is_supported": true, "is_readable": true, "page_count": 1, "status": "PASS"},
+  "extracted_data": {
+    "fields": {
+      "currency": {"value": "INR crore", "source_text": "Rs in crore", "page_number": 1},
+      "operating_cash_flow": {"value": {"2023": 3100.00}, "source_text": "Net cash from operating activities", "page_number": 1},
+      "investing_cash_flow": {"value": {"2023": -1200.00}, "source_text": "Net cash used in investing activities", "page_number": 1},
+      "financing_cash_flow": {"value": {"2023": -900.00}, "source_text": "Net cash used in financing activities", "page_number": 1},
+      "opening_cash": {"value": {"2023": 500.00}, "source_text": "Opening cash and cash equivalents", "page_number": 1},
+      "net_change_in_cash": {"value": {"2023": 1000.00}, "source_text": "Net increase in cash", "page_number": 1},
+      "closing_cash": {"value": {"2023": 1500.00}, "source_text": "Closing cash and cash equivalents", "page_number": 1}
+    },
+    "line_items": [], "statement_line_items": [], "period_headers": ["2023"]
+  },
+  "validation": {
+    "checks": [
+      {"name": "net_change_in_cash_check", "formula": "operating + investing + financing (+ fx adjustment)", "operands": {"operating_cash_flow": 3100.00, "investing_cash_flow": -1200.00, "financing_cash_flow": -900.00}, "calculated_value": 1000.00, "reported_value": 1000.00, "variance": 0.00, "status": "PASS", "period": "2023", "message": null},
+      {"name": "closing_cash_check", "formula": "opening_cash + net_change_in_cash (+ other adjustments)", "operands": {"opening_cash": 500.00, "net_change_in_cash": 1000.00}, "calculated_value": 1500.00, "reported_value": 1500.00, "variance": 0.00, "status": "PASS", "period": "2023", "message": null}
+    ],
+    "overall_status": "PASS", "issues": []
+  },
+  "processing_metadata": {"ocr_used": true, "processed_at": "2026-09-10T12:15:00.000Z", "processing_time_ms": 4610, "pages_processed": 1, "llm_model": "claude-sonnet-4-6", "warnings": []}
+}

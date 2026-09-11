@@ -1,0 +1,64 @@
+{
+  "_note": "ILLUSTRATIVE example of the expected response shape for a balance sheet once ANTHROPIC_API_KEY is configured. Not produced by a live model call.",
+  "document_name": "Consolidated Balance Sheet 2023.pdf",
+  "document_type": "balance_sheet",
+  "processing_status": "PASS",
+  "overall_confidence": 0.91,
+  "file_validation": {
+    "file_type": "application/pdf",
+    "is_supported": true,
+    "is_readable": true,
+    "page_count": 1,
+    "status": "PASS"
+  },
+  "extracted_data": {
+    "fields": {
+      "currency": {"value": "INR crore", "source_text": "Rs in crore", "page_number": 1},
+      "total_assets": {"value": {"March 31, 2023": 12345.67, "March 31, 2022": 11890.10}, "source_text": "TOTAL ASSETS", "page_number": 1},
+      "total_liabilities": {"value": {"March 31, 2023": 8100.00, "March 31, 2022": 7950.20}, "source_text": "Total Liabilities", "page_number": 1},
+      "total_equity": {"value": {"March 31, 2023": 4245.67, "March 31, 2022": 3939.90}, "source_text": "Total Equity", "page_number": 1}
+    },
+    "line_items": [],
+    "statement_line_items": [
+      {"label": "Capital", "schedule": "1", "values": {"March 31, 2023": 557.97, "March 31, 2022": 554.55}, "page_number": 1},
+      {"label": "Reserves and surplus", "schedule": "2", "values": {"March 31, 2023": 288879.53, "March 31, 2022": 246771.62}, "page_number": 1}
+    ],
+    "period_headers": ["March 31, 2023", "March 31, 2022"]
+  },
+  "validation": {
+    "checks": [
+      {
+        "name": "assets_equal_liabilities_plus_equity",
+        "formula": "total_liabilities + total_equity ≈ total_assets",
+        "operands": {"total_liabilities": 8100.00, "total_equity": 4245.67},
+        "calculated_value": 12345.67,
+        "reported_value": 12345.67,
+        "variance": 0.00,
+        "status": "PASS",
+        "period": "March 31, 2023",
+        "message": null
+      },
+      {
+        "name": "assets_equal_liabilities_plus_equity",
+        "formula": "total_liabilities + total_equity ≈ total_assets",
+        "operands": {"total_liabilities": 7950.20, "total_equity": 3939.90},
+        "calculated_value": 11890.10,
+        "reported_value": 11890.10,
+        "variance": 0.00,
+        "status": "PASS",
+        "period": "March 31, 2022",
+        "message": null
+      }
+    ],
+    "overall_status": "PASS",
+    "issues": []
+  },
+  "processing_metadata": {
+    "ocr_used": true,
+    "processed_at": "2026-09-10T12:05:00.000Z",
+    "processing_time_ms": 5120,
+    "pages_processed": 1,
+    "llm_model": "claude-sonnet-4-6",
+    "warnings": []
+  }
+}

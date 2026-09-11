@@ -1,0 +1,30 @@
+{
+  "_note": "ILLUSTRATIVE example only — not produced by a live model call.",
+  "document_name": "Consolidated Profit & Loss 2023.pdf",
+  "document_type": "profit_and_loss",
+  "processing_status": "PASS",
+  "overall_confidence": 0.93,
+  "file_validation": {"file_type": "application/pdf", "is_supported": true, "is_readable": true, "page_count": 1, "status": "PASS"},
+  "extracted_data": {
+    "fields": {
+      "currency": {"value": "INR crore", "source_text": "Rs in crore", "page_number": 1},
+      "revenue": {"value": {"2023": 9800.00, "2022": 9100.00}, "source_text": "Revenue from operations", "page_number": 1},
+      "cost_of_sales": {"value": {"2023": 4200.00, "2022": 3950.00}, "source_text": "Cost of sales", "page_number": 1},
+      "gross_profit": {"value": {"2023": 5600.00, "2022": 5150.00}, "source_text": "Gross profit", "page_number": 1},
+      "operating_expenses": {"value": {"2023": 2100.00, "2022": 1980.00}, "source_text": "Operating expenses", "page_number": 1},
+      "operating_profit": {"value": {"2023": 3500.00, "2022": 3170.00}, "source_text": "Operating profit", "page_number": 1},
+      "tax": {"value": {"2023": 875.00, "2022": 792.50}, "source_text": "Tax", "page_number": 1},
+      "net_profit": {"value": {"2023": 2625.00, "2022": 2377.50}, "source_text": "Net profit", "page_number": 1}
+    },
+    "line_items": [], "statement_line_items": [], "period_headers": ["2023", "2022"]
+  },
+  "validation": {
+    "checks": [
+      {"name": "gross_profit_check", "formula": "revenue - cost_of_sales", "operands": {"revenue": 9800.00, "cost_of_sales": -4200.00}, "calculated_value": 5600.00, "reported_value": 5600.00, "variance": 0.00, "status": "PASS", "period": "2023", "message": null},
+      {"name": "operating_profit_check", "formula": "gross_profit - operating_expenses", "operands": {"gross_profit": 5600.00, "operating_expenses": -2100.00}, "calculated_value": 3500.00, "reported_value": 3500.00, "variance": 0.00, "status": "PASS", "period": "2023", "message": null},
+      {"name": "net_profit_check", "formula": "operating_profit - tax", "operands": {"operating_profit": 3500.00, "tax": -875.00}, "calculated_value": 2625.00, "reported_value": 2625.00, "variance": 0.00, "status": "PASS", "period": "2023", "message": null}
+    ],
+    "overall_status": "PASS", "issues": []
+  },
+  "processing_metadata": {"ocr_used": true, "processed_at": "2026-09-10T12:10:00.000Z", "processing_time_ms": 4890, "pages_processed": 1, "llm_model": "claude-sonnet-4-6", "warnings": []}
+}
