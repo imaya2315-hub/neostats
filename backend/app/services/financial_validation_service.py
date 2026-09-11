@@ -163,20 +163,18 @@ def _validate_invoice(
 
     checks: list[dict] = []
 
-    # ---------------------------------------------------------
-    # 1. Line-item arithmetic
-    # ---------------------------------------------------------
+
 
     for idx, item in enumerate(
         line_items,
         start=1,
     ):
 
-        qty = item.get(
+        quantity = item.get(
             "quantity"
         )
 
-        price = item.get(
+        unit_price = item.get(
             "unit_price"
         )
 
@@ -185,70 +183,65 @@ def _validate_invoice(
         )
 
         calculated = (
-            qty * price
-            if qty is not None
-            and price is not None
+            round(
+                quantity * unit_price,
+                2,
+            )
+            if quantity is not None
+            and unit_price is not None
             else None
         )
 
         checks.append(
             _build_check(
-                f"line_item_{idx}_check",
-                "quantity * unit_price",
-                {
-                    "quantity_x_unit_price": calculated
+                name=f"line_item_{idx}_check",
+                formula="quantity * unit_price",
+                operand_values={
+                    "quantity_x_unit_price":
+                        calculated
                 },
-                amount,
-                None,
+                reported=amount,
+                period=None,
             )
         )
 
-    # ---------------------------------------------------------
-    # 2. Line items -> subtotal
-    # ---------------------------------------------------------
+ 
 
-    if (
-        line_items
-        and all(
-            item.get("amount") is not None
-            for item in line_items
+    valid_amounts = [
+        item.get("amount")
+        for item in line_items
+        if isinstance(
+            item.get("amount"),
+            (int, float),
         )
-    ):
-
-        subtotal = _field_value(
-            fields,
-            "subtotal",
-        )
-
-        line_items_total = round(
-            sum(
-                item["amount"]
-                for item in line_items
-            ),
-            2,
-        )
-
-        checks.append(
-            _build_check(
-                "line_items_sum_to_subtotal",
-                "sum(line_item.amount)",
-                {
-                    "sum_of_line_items":
-                        line_items_total
-                },
-                subtotal,
-                None,
-            )
-        )
-
-    # ---------------------------------------------------------
-    # 3. Invoice total
-    # ---------------------------------------------------------
+    ]
 
     subtotal = _field_value(
         fields,
         "subtotal",
     )
+
+    if valid_amounts:
+
+        line_items_total = round(
+            sum(valid_amounts),
+            2,
+        )
+
+        checks.append(
+            _build_check(
+                name="line_items_sum_to_subtotal",
+                formula="sum(line_item.amount)",
+                operand_values={
+                    "sum_of_line_items":
+                        line_items_total
+                },
+                reported=subtotal,
+                period=None,
+            )
+        )
+
+
 
     tax = _field_value(
         fields,
@@ -265,10 +258,7 @@ def _validate_invoice(
         "total_amount",
     )
 
-    # A missing discount means no discount was extracted.
-    # Treat it as zero for arithmetic purposes rather than
-    # making the entire total check NOT_APPLICABLE.
-    discount_for_calculation = (
+    discount_value = (
         discount
         if discount is not None
         else 0
@@ -276,22 +266,18 @@ def _validate_invoice(
 
     checks.append(
         _build_check(
-            "invoice_total_check",
-            "subtotal + tax_amount - discount",
-            {
+            name="invoice_total_check",
+            formula="subtotal + tax_amount - discount",
+            operand_values={
                 "subtotal": subtotal,
                 "tax_amount": tax,
-                "discount":
-                    -discount_for_calculation,
+                "discount": -discount_value,
             },
-            total,
-            None,
+            reported=total,
+            period=None,
         )
     )
 
-    # ---------------------------------------------------------
-    # 4. Cash / change validation
-    # ---------------------------------------------------------
 
     cash_paid = _field_value(
         fields,
@@ -303,58 +289,45 @@ def _validate_invoice(
         "change",
     )
 
-    # Support alternate field name if present.
-    if change is None:
-        change = _field_value(
-            fields,
-            "change_amount",
-        )
-
     if (
         cash_paid is not None
         or change is not None
     ):
 
-        # The calculation is:
-        #
-        # cash paid - invoice total = change
-        #
-        # _build_check performs addition, so total is passed
-        # as a negative operand.
+        negative_total = (
+            -total
+            if total is not None
+            else None
+        )
+
+        check = _build_check(
+            name="cash_change_check",
+            formula="cash_paid - total_amount",
+            operand_values={
+                "cash_paid": cash_paid,
+                "negative_total_amount":
+                    negative_total,
+            },
+            reported=change,
+            period=None,
+        )
 
         if (
             cash_paid is not None
             and total is not None
         ):
+
             expected_change = round(
                 cash_paid - total,
                 2,
             )
-        else:
-            expected_change = None
 
-        check = _build_check(
-            "cash_change_check",
-            "cash_paid - total_amount",
-            {
-                "cash_paid": cash_paid,
-                "negative_total_amount":
-                    -total
-                    if total is not None
-                    else None,
-            },
-            change,
-            None,
-        )
-
-        # Replace the generic calculated value with the
-        # semantically clearer expected change.
-        if expected_change is not None:
             check["calculated_value"] = (
                 expected_change
             )
 
             if change is not None:
+
                 check["variance"] = round(
                     expected_change - change,
                     2,
