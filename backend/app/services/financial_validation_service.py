@@ -147,202 +147,318 @@ def _value_for_period(
     )
 
 
-def _validate_invoice(
-    extracted: dict,
-) -> list[dict]:
+def validate_invoice_financials(
+    fields: dict,
+    line_items: list[dict],
+) -> dict:
+    checks = []
+    issues = []
 
-    fields = extracted.get(
-        "fields",
-        {},
-    )
+    def value(name):
+        field = fields.get(name)
+        if isinstance(field, dict):
+            return field.get("value")
+        return field
 
-    line_items = extracted.get(
-        "line_items",
-        [],
-    )
+    def num(v):
+        if isinstance(v, (int, float)):
+            return float(v)
+        return None
 
-    checks: list[dict] = []
+    def check_line_item(index, item):
+        quantity = num(item.get("quantity"))
+        unit_price = num(item.get("unit_price"))
+        amount = num(item.get("amount"))
 
-    for idx, item in enumerate(
-        line_items,
-        start=1,
-    ):
+        calculated = None
+        variance = None
+        status = "NOT_APPLICABLE"
+        message = None
 
-        quantity = item.get("quantity")
-        unit_price = item.get("unit_price")
-        amount = item.get("amount")
+        if quantity is not None and unit_price is not None:
+            calculated = round(quantity * unit_price, 2)
 
-        calculated = (
-            round(
-                quantity * unit_price,
-                2,
+            if amount is not None:
+                variance = round(calculated - amount, 2)
+                status = "PASS" if abs(variance) <= 0.05 else "FAIL"
+
+                if status == "FAIL":
+                    message = (
+                        f"Line item amount does not match "
+                        f"quantity × unit price: expected {calculated}, "
+                        f"reported {amount}."
+                    )
+            else:
+                status = "NOT_APPLICABLE"
+                message = "Line item amount is not present."
+
+        else:
+            message = (
+                "Required field(s) not present in document: "
+                "quantity_x_unit_price"
             )
-            if quantity is not None
-            and unit_price is not None
-            else None
-        )
 
-        checks.append(
-            _build_check(
-                name=f"line_item_{idx}_check",
-                formula="quantity * unit_price",
-                operand_values={
-                    "quantity_x_unit_price": calculated,
-                },
-                reported=amount,
-                period=None,
+        return {
+            "name": f"line_item_{index}_check",
+            "formula": "quantity * unit_price",
+            "operands": {
+                "quantity_x_unit_price": calculated
+            },
+            "calculated_value": calculated,
+            "reported_value": amount,
+            "variance": variance,
+            "status": status,
+            "period": None,
+            "message": message,
+        }
+
+    for index, item in enumerate(line_items, start=1):
+        check = check_line_item(index, item)
+        checks.append(check)
+
+        if check["status"] == "FAIL":
+            issues.append(
+                f'{check["name"]}: {check["message"]}'
             )
-        )
 
-    valid_amounts = [
-        item.get("amount")
+    amounts = [
+        num(item.get("amount"))
         for item in line_items
-        if isinstance(
-            item.get("amount"),
-            (int, float),
-        )
+        if num(item.get("amount")) is not None
     ]
 
-    subtotal = _field_value(
-        fields,
-        "subtotal",
-    )
+    subtotal = num(value("subtotal"))
 
-    if valid_amounts:
-        line_items_total = round(
-            sum(valid_amounts),
-            2,
-        )
+    if amounts:
+        line_item_sum = round(sum(amounts), 2)
 
-        checks.append(
-            _build_check(
-                name="line_items_sum_to_subtotal",
-                formula="sum(line_item.amount)",
-                operand_values={
-                    "sum_of_line_items": line_items_total,
-                },
-                reported=subtotal,
-                period=None,
-            )
-        )
+        if subtotal is not None:
+            variance = round(line_item_sum - subtotal, 2)
+            status = "PASS" if abs(variance) <= 0.05 else "FAIL"
 
-    tax = _field_value(
-        fields,
-        "tax_amount",
-    )
-
-    discount = _field_value(
-        fields,
-        "discount",
-    )
-
-    total = _field_value(
-        fields,
-        "total_amount",
-    )
-
-    if (
-        subtotal is not None
-        and tax is not None
-        and total is not None
-        and discount is not None
-    ):
-        checks.append(
-            _build_check(
-                name="invoice_total_check",
-                formula="subtotal + tax_amount - discount",
-                operand_values={
-                    "subtotal": subtotal,
-                    "tax_amount": tax,
-                    "discount": -discount,
-                },
-                reported=total,
-                period=None,
-            )
-        )
-    else:
-        checks.append(
-            {
-                "name": "invoice_total_check",
-                "formula": "subtotal + tax_amount - discount",
+            checks.append({
+                "name": "line_items_sum_to_subtotal",
+                "formula": "sum(line_item.amount)",
                 "operands": {
-                    "subtotal": subtotal,
-                    "tax_amount": tax,
-                    "discount": discount,
+                    "sum_of_line_items": line_item_sum
                 },
-                "calculated_value": None,
-                "reported_value": total,
+                "calculated_value": line_item_sum,
+                "reported_value": subtotal,
+                "variance": variance,
+                "status": status,
+                "period": None,
+                "message": None,
+            })
+
+            if status == "FAIL":
+                issues.append(
+                    f"line_items_sum_to_subtotal: "
+                    f"reported {subtotal} vs calculated "
+                    f"{line_item_sum} (variance {variance})"
+                )
+        else:
+            checks.append({
+                "name": "line_items_sum_to_subtotal",
+                "formula": "sum(line_item.amount)",
+                "operands": {
+                    "sum_of_line_items": line_item_sum
+                },
+                "calculated_value": line_item_sum,
+                "reported_value": None,
                 "variance": None,
                 "status": "NOT_APPLICABLE",
                 "period": None,
-                "message": (
-                    "Invoice total cannot be deterministically "
-                    "validated from the available fields."
-                ),
-            }
-        )
+                "message": "Subtotal is not present.",
+            })
+    else:
+        checks.append({
+            "name": "line_items_sum_to_subtotal",
+            "formula": "sum(line_item.amount)",
+            "operands": {
+                "sum_of_line_items": None
+            },
+            "calculated_value": None,
+            "reported_value": subtotal,
+            "variance": None,
+            "status": "NOT_APPLICABLE",
+            "period": None,
+            "message": "No line item amounts are available.",
+        })
 
-    cash_paid = _field_value(
-        fields,
-        "cash_paid",
-    )
+    tax = num(value("tax_amount"))
+    discount = num(value("discount"))
+    total = num(value("total_amount"))
 
-    change = _field_value(
-        fields,
-        "change",
-    )
+    if subtotal is not None and tax is not None and total is not None:
+        effective_discount = discount if discount is not None else 0.0
 
-    if (
-        cash_paid is not None
-        and total is not None
-        and change is not None
-    ):
-        expected_change = round(
-            cash_paid - total,
+        calculated_total = round(
+            subtotal + tax - effective_discount,
             2,
         )
 
         variance = round(
-            expected_change - change,
+            calculated_total - total,
             2,
         )
 
         status = (
             "PASS"
-            if _within_tolerance(
-                expected_change,
-                change,
-            )
+            if abs(variance) <= 0.05
             else "FAIL"
         )
 
-        checks.append(
-            {
+        checks.append({
+            "name": "invoice_total_check",
+            "formula": "subtotal + tax_amount - discount",
+            "operands": {
+                "subtotal": subtotal,
+                "tax_amount": tax,
+                "discount": effective_discount,
+            },
+            "calculated_value": calculated_total,
+            "reported_value": total,
+            "variance": variance,
+            "status": status,
+            "period": None,
+            "message": None,
+        })
+
+        if status == "FAIL":
+            issues.append(
+                f"invoice_total_check: "
+                f"reported {total} vs calculated "
+                f"{calculated_total} (variance {variance})"
+            )
+    else:
+        missing = []
+
+        if subtotal is None:
+            missing.append("subtotal")
+
+        if tax is None:
+            missing.append("tax_amount")
+
+        if total is None:
+            missing.append("total_amount")
+
+        checks.append({
+            "name": "invoice_total_check",
+            "formula": "subtotal + tax_amount - discount",
+            "operands": {
+                "subtotal": subtotal,
+                "tax_amount": tax,
+                "discount": discount,
+            },
+            "calculated_value": None,
+            "reported_value": total,
+            "variance": None,
+            "status": "NOT_APPLICABLE",
+            "period": None,
+            "message": (
+                "Required field(s) not present in document: "
+                + ", ".join(missing)
+            ),
+        })
+
+    cash_paid = num(value("cash_paid"))
+    change = num(value("change"))
+
+    if cash_paid is not None and total is not None:
+        calculated_change = round(
+            cash_paid - total,
+            2,
+        )
+
+        if change is not None:
+            variance = round(
+                calculated_change - change,
+                2,
+            )
+
+            status = (
+                "PASS"
+                if abs(variance) <= 0.05
+                else "FAIL"
+            )
+
+            message = None
+
+            if status == "FAIL":
+                message = (
+                    f"Extracted change does not match "
+                    f"cash paid minus invoice total: "
+                    f"expected {calculated_change}, "
+                    f"reported {change}."
+                )
+
+            checks.append({
                 "name": "cash_change_check",
                 "formula": "cash_paid - total_amount",
                 "operands": {
                     "cash_paid": cash_paid,
-                    "negative_total_amount": -total,
+                    "total_amount": total,
                 },
-                "calculated_value": expected_change,
+                "calculated_value": calculated_change,
                 "reported_value": change,
                 "variance": variance,
                 "status": status,
                 "period": None,
-                "message": (
-                    None
-                    if status == "PASS"
-                    else (
-                        "Extracted change does not match "
-                        "cash paid minus invoice total: "
-                        f"expected {expected_change}, "
-                        f"reported {change}."
-                    )
-                ),
-            }
-        )
+                "message": message,
+            })
 
-    return checks
+            if status == "FAIL":
+                issues.append(
+                    f"cash_change_check: "
+                    f"reported {change} vs calculated "
+                    f"{calculated_change} "
+                    f"(variance {variance})"
+                )
+        else:
+            checks.append({
+                "name": "cash_change_check",
+                "formula": "cash_paid - total_amount",
+                "operands": {
+                    "cash_paid": cash_paid,
+                    "total_amount": total,
+                },
+                "calculated_value": calculated_change,
+                "reported_value": None,
+                "variance": None,
+                "status": "NOT_APPLICABLE",
+                "period": None,
+                "message": "Change is not present.",
+            })
+    else:
+        checks.append({
+            "name": "cash_change_check",
+            "formula": "cash_paid - total_amount",
+            "operands": {
+                "cash_paid": cash_paid,
+                "total_amount": total,
+            },
+            "calculated_value": None,
+            "reported_value": change,
+            "variance": None,
+            "status": "NOT_APPLICABLE",
+            "period": None,
+            "message": (
+                "Required field(s) not present in document: "
+                "cash_paid or total_amount"
+            ),
+        })
+
+    overall_status = (
+        "FAIL"
+        if issues
+        else "PASS"
+    )
+
+    return {
+        "checks": checks,
+        "overall_status": overall_status,
+        "issues": issues,
+    }
 
 def _validate_balance_sheet(
     extracted: dict,
