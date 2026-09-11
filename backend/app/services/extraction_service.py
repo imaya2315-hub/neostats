@@ -67,23 +67,28 @@ REQUIRED_FIELDS = {
 
 _DOC_TYPE_GUIDANCE = {
 "invoice": (
-    "This is an INVOICE or RECEIPT. Extract these fields:\n"
+    "This is an INVOICE or RECEIPT.\n"
+    "Extract the following fields when explicitly visible:\n"
     "invoice_number, invoice_date, due_date, po_number,\n"
     "vendor_name, vendor_address, customer_name, customer_address,\n"
     "currency, subtotal, discount, tax_amount,\n"
     "shipping_other_charges, total_amount, cash_paid, change.\n\n"
 
-    "Extract every visible line item with:\n"
+    "Extract every visible line item in reading order with:\n"
     "description, quantity, unit_price, amount.\n\n"
 
-    "IMPORTANT:\n"
-    "invoice_date must be the complete date as a STRING.\n"
-    "vendor_address must be the complete address as a STRING.\n"
-    "cash_paid is the explicitly printed payment amount.\n"
-    "change is the explicitly printed change amount.\n"
-    "total_amount is the explicitly printed total.\n"
-    "Do NOT calculate any of these values.\n"
-    "If a value is missing or unreadable, return null.\n"
+    "IMPORTANT EXTRACTION RULES:\n"
+    "1. invoice_date MUST be a complete date STRING. "
+    "Never return only the day number.\n"
+    "2. vendor_address MUST be the complete address STRING.\n"
+    "3. subtotal MUST be extracted when a subtotal/total-before-tax "
+    "amount is explicitly visible.\n"
+    "4. total_amount MUST be the explicitly printed invoice/receipt total.\n"
+    "5. cash_paid MUST be the explicitly printed cash/payment amount.\n"
+    "6. change MUST be the explicitly printed change amount.\n"
+    "7. NEVER calculate change from cash_paid and total_amount.\n"
+    "8. NEVER replace a printed value with a calculated value.\n"
+    "9. If a value is not explicitly visible, return null.\n"
 ),
 
     "balance_sheet": (
@@ -242,13 +247,23 @@ def _call_llm(document_type: str, page_texts: list[str]) -> dict:
         timeout=settings.LLM_TIMEOUT_SECONDS,
     )
 
-    user_prompt = _build_user_prompt(document_type, page_texts)
+    user_prompt = _build_user_prompt(
+        document_type,
+        page_texts,
+    )
 
     try:
         response = client.chat.completions.create(
             model=settings.GROQ_MODEL,
-            max_tokens=settings.LLM_MAX_TOKENS,
-            response_format={"type": "json_object"},
+
+            # Groq currently limits your output to 1000 TPM.
+            # Keep a safety margin below that limit.
+            max_tokens=900,
+
+            response_format={
+                "type": "json_object"
+            },
+
             messages=[
                 {
                     "role": "system",
@@ -260,16 +275,23 @@ def _call_llm(document_type: str, page_texts: list[str]) -> dict:
                 },
             ],
         )
+
     except Exception as exc:
         logger.exception(
             "LLM call failed for document_type=%s",
             document_type,
         )
+
         raise ExtractionError(
             f"LLM_CALL_FAILED: {exc}"
         ) from exc
 
-    raw_text = response.choices[0].message.content or ""
+    raw_text = (
+        response.choices[0]
+        .message
+        .content
+        or ""
+    )
 
     return _parse_llm_json(raw_text)
 
