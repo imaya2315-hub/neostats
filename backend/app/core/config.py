@@ -49,7 +49,7 @@ class Settings:
     # Any provider can be used; Anthropic is the default here. The key is
     # read from the environment only and is never committed to source.
     GROQ_API_KEY: str | None = os.getenv("GROQ_API_KEY")
-    GROQ_MODEL: str = os.getenv("GROQ_MODEL", "Qwen 3.8-27B")
+    GROQ_MODEL: str = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
     LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "4096"))
     LLM_TIMEOUT_SECONDS: int = int(os.getenv("LLM_TIMEOUT_SECONDS", "60"))
 
