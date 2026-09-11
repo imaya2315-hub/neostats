@@ -66,57 +66,25 @@ REQUIRED_FIELDS = {
 
 
 _DOC_TYPE_GUIDANCE = {
-    "invoice": (
-        "This document is an INVOICE or RECEIPT.\n\n"
-        "Extract every visible header, summary, payment and line-item field.\n\n"
+"invoice": (
+    "This is an INVOICE or RECEIPT. Extract these fields:\n"
+    "invoice_number, invoice_date, due_date, po_number,\n"
+    "vendor_name, vendor_address, customer_name, customer_address,\n"
+    "currency, subtotal, discount, tax_amount,\n"
+    "shipping_other_charges, total_amount, cash_paid, change.\n\n"
 
-        "HEADER FIELDS:\n"
-        "- invoice_number\n"
-        "- invoice_date\n"
-        "- due_date\n"
-        "- po_number\n"
-        "- vendor_name\n"
-        "- vendor_address\n"
-        "- customer_name\n"
-        "- customer_address\n"
-        "- currency\n"
-        "- payment_terms\n\n"
+    "Extract every visible line item with:\n"
+    "description, quantity, unit_price, amount.\n\n"
 
-        "FINANCIAL FIELDS:\n"
-        "- subtotal\n"
-        "- discount\n"
-        "- tax_amount\n"
-        "- shipping_other_charges\n"
-        "- total_amount\n\n"
-
-        "PAYMENT FIELDS:\n"
-        "- cash_paid\n"
-        "- change\n\n"
-
-        "OTHER VISIBLE FIELDS:\n"
-        "- notes\n"
-        "- gst_registration_number\n"
-        "- counter\n"
-        "- served_by\n"
-        "- number_of_items\n"
-        "- phone_number\n"
-        "- reference_number\n\n"
-
-        "LINE ITEMS:\n"
-        "Extract every visible line item in reading order with:\n"
-        "- description\n"
-        "- quantity\n"
-        "- unit_price\n"
-        "- amount\n\n"
-
-        "IMPORTANT:\n"
-        "cash_paid means the amount explicitly shown as payment/cash received.\n"
-        "change means the amount explicitly printed as change returned to the customer.\n"
-        "total_amount means the explicitly printed invoice/receipt total.\n"
-        "Do not substitute one field for another.\n"
-        "Do not calculate cash_paid, change, subtotal, tax, or total_amount.\n"
-        "If a value is not explicitly visible, return null."
-    ),
+    "IMPORTANT:\n"
+    "invoice_date must be the complete date as a STRING.\n"
+    "vendor_address must be the complete address as a STRING.\n"
+    "cash_paid is the explicitly printed payment amount.\n"
+    "change is the explicitly printed change amount.\n"
+    "total_amount is the explicitly printed total.\n"
+    "Do NOT calculate any of these values.\n"
+    "If a value is missing or unreadable, return null.\n"
+),
 
     "balance_sheet": (
         "This is a BALANCE SHEET. Extract header information "
