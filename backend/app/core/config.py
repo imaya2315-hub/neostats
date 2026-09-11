@@ -9,6 +9,24 @@ from __future__ import annotations
 
 import os
 from functools import lru_cache
+from pathlib import Path
+
+try:
+    from dotenv import load_dotenv
+    # Look for .env in current working dir, backend dir, or project root
+    for candidate in [
+        Path.cwd() / ".env",
+        Path(__file__).resolve().parent.parent.parent.parent / ".env",
+        Path(__file__).resolve().parent.parent.parent / ".env",
+        Path(__file__).resolve().parent.parent / ".env",
+    ]:
+        if candidate.is_file():
+            load_dotenv(candidate)
+            break
+    else:
+        load_dotenv()
+except ImportError:
+    pass
 
 
 def _get_bool(name: str, default: bool) -> bool:
@@ -50,7 +68,7 @@ class Settings:
     # read from the environment only and is never committed to source.
     GROQ_API_KEY: str | None = os.getenv("GROQ_API_KEY")
     GROQ_MODEL: str = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
-    LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "900"))
+    LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "1000"))
     LLM_TIMEOUT_SECONDS: int = int(os.getenv("LLM_TIMEOUT_SECONDS", "60"))
 
     # --- Financial validation ---

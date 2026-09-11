@@ -25,7 +25,7 @@ from sqlalchemy.orm import Session
 from app.core.logging import get_logger
 from app.repositories import document_repository
 from app.services import document_validation_service, financial_validation_service, ocr_service
-from app.services.extraction_service import REQUIRED_FIELDS, ExtractionError, extract
+from app.services.extraction_service import REQUIRED_FIELDS, ExtractionError, extract, get_required_fields
 
 logger = get_logger("docintel.orchestrator")
 
@@ -37,6 +37,7 @@ _EXPECTS_TABLE = {
     "balance_sheet": True,
     "profit_and_loss": True,
     "cash_flow_statement": True,
+    "cash_flow": True,
 }
 
 
@@ -201,8 +202,8 @@ def _compute_confidence(document_type: str, extracted_data: dict, validation: di
     restricted to whichever of those two signals actually has data to
     measure. Returns None when neither signal is available.
     """
-    required = REQUIRED_FIELDS.get(document_type, [])
     fields = (extracted_data or {}).get("fields", {})
+    required = get_required_fields(document_type, fields)
     components: list[float] = []
 
     if required:
@@ -226,8 +227,8 @@ def _determine_status(document_type: str, extracted_data: dict, validation: dict
     AND no financial-validation check outright FAILED. NOT_APPLICABLE
     checks (missing source fields) never block a PASS on their own, per
     the assignment's definition of PASS/FAILED."""
-    required = REQUIRED_FIELDS.get(document_type, [])
     fields = (extracted_data or {}).get("fields", {})
+    required = get_required_fields(document_type, fields)
     any_required_found = any((fields.get(name) or {}).get("value") is not None for name in required)
     any_check_failed = any(c["status"] == "FAIL" for c in (validation or {}).get("checks", []))
     return "PASS" if any_required_found and not any_check_failed else "FAILED"

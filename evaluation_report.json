@@ -1,0 +1,3218 @@
+{
+  "timestamp": "2026-09-11T13:51:08Z",
+  "summary": {
+    "total_documents": 50,
+    "pass_count": 47,
+    "fail_count": 3,
+    "overall_pass_rate_pct": 94.0,
+    "average_confidence": 0.8981,
+    "average_processing_time_ms": 54991.1,
+    "by_document_type": {
+      "balance_sheet": {
+        "total": 10,
+        "pass_count": 10,
+        "fail_count": 0,
+        "pass_rate_pct": 100.0,
+        "avg_confidence": 0.8625,
+        "avg_time_ms": 43912.1
+      },
+      "cash_flow_statement": {
+        "total": 10,
+        "pass_count": 9,
+        "fail_count": 1,
+        "pass_rate_pct": 90.0,
+        "avg_confidence": 0.9875,
+        "avg_time_ms": 57366.5
+      },
+      "invoice": {
+        "total": 20,
+        "pass_count": 18,
+        "fail_count": 2,
+        "pass_rate_pct": 90.0,
+        "avg_confidence": 0.8678,
+        "avg_time_ms": 57458.9
+      },
+      "profit_and_loss": {
+        "total": 10,
+        "pass_count": 10,
+        "fail_count": 0,
+        "pass_rate_pct": 100.0,
+        "avg_confidence": 0.905,
+        "avg_time_ms": 58759.1
+      }
+    },
+    "financial_validation_checks_total": {
+      "PASS": 155,
+      "FAIL": 5,
+      "NOT_APPLICABLE": 42
+    },
+    "financial_validation_by_rule": {
+      "unknown": {
+        "PASS": 123,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 38
+      },
+      "assets_equal_liabilities_plus_equity": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "net_change_in_cash_check": {
+        "PASS": 3,
+        "FAIL": 1,
+        "NOT_APPLICABLE": 0
+      },
+      "closing_cash_check": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "invoice_total_check": {
+        "PASS": 7,
+        "FAIL": 2,
+        "NOT_APPLICABLE": 0
+      },
+      "cash_change_check": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 2
+      },
+      "line_item_1_check": {
+        "PASS": 2,
+        "FAIL": 1,
+        "NOT_APPLICABLE": 2
+      },
+      "line_items_sum_to_total": {
+        "PASS": 3,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "line_items_sum_to_subtotal": {
+        "PASS": 1,
+        "FAIL": 1,
+        "NOT_APPLICABLE": 0
+      },
+      "line_item_2_check": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "line_item_3_check": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "line_item_4_check": {
+        "PASS": 1,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "line_item_5_check": {
+        "PASS": 1,
+        "FAIL": 0,
+        "NOT_APPLICABLE": 0
+      }
+    }
+  },
+  "documents": [
+    {
+      "document_name": "Consolidated Balance Sheet 2017.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.875,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 19750,
+      "extracted_fields_count": 8,
+      "extracted_key_fields": [
+        "entity_name",
+        "document_type",
+        "reporting_date",
+        "currency",
+        "unit",
+        "total_assets",
+        "total_equity",
+        "total_capital_and_liabilities"
+      ],
+      "line_items_count": 2,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2018.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.625,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 20078,
+      "extracted_fields_count": 5,
+      "extracted_key_fields": [
+        "entity_name",
+        "document_title",
+        "unit",
+        "total_assets",
+        "total_capital_and_liabilities"
+      ],
+      "line_items_count": 5,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2019.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 61687,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "entity_name",
+        "document_type",
+        "currency",
+        "total_assets",
+        "total_liabilities",
+        "total_equity",
+        "total_capital_and_liabilities",
+        "current_assets",
+        "non_current_assets",
+        "current_liabilities"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2020.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.875,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59281,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "entity_name",
+        "document_title",
+        "as_at",
+        "unit",
+        "currency",
+        "total_assets",
+        "total_equity",
+        "total_capital_and_liabilities",
+        "minority_interest",
+        "deposits"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2021.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 17250,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "entity_name",
+        "currency",
+        "total_equity",
+        "total_assets",
+        "total_liabilities",
+        "total_capital_and_liabilities",
+        "period_1_date",
+        "period_2_date",
+        "auditor_name",
+        "auditor_icai_firm_registration_number"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "assets_equal_liabilities_plus_equity",
+          "status": "PASS",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "calculated_value": 17995066442,
+          "reported_value": 17995066442,
+          "variance": 0,
+          "operands": {
+            "total_capital_and_liabilities": 17995066442
+          }
+        },
+        {
+          "check_name": "assets_equal_liabilities_plus_equity",
+          "status": "PASS",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "calculated_value": 15808304373,
+          "reported_value": 15808304373,
+          "variance": 0,
+          "operands": {
+            "total_capital_and_liabilities": 15808304373
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2022.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.875,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59296,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "document_title",
+        "reporting_date",
+        "currency",
+        "total_assets",
+        "total_equity",
+        "total_capital_and_liabilities",
+        "current_assets",
+        "non_current_assets",
+        "current_liabilities"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2023.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 60078,
+      "extracted_fields_count": 6,
+      "extracted_key_fields": [
+        "reporting_date",
+        "currency",
+        "total_assets",
+        "total_liabilities",
+        "total_equity",
+        "total_capital_and_liabilities"
+      ],
+      "line_items_count": 4,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2024.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.875,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59656,
+      "extracted_fields_count": 6,
+      "extracted_key_fields": [
+        "entity_name",
+        "document_title",
+        "currency",
+        "total_assets",
+        "total_equity",
+        "total_capital_and_liabilities"
+      ],
+      "line_items_count": 3,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2025.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.75,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 20436,
+      "extracted_fields_count": 5,
+      "extracted_key_fields": [
+        "entity_name",
+        "document_type",
+        "currency",
+        "total_assets",
+        "total_capital_and_liabilities"
+      ],
+      "line_items_count": 5,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Balance Sheet 2026.pdf",
+      "document_type": "balance_sheet",
+      "folder": "balance_sheet",
+      "processing_status": "PASS",
+      "overall_confidence": 0.75,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 61609,
+      "extracted_fields_count": 6,
+      "extracted_key_fields": [
+        "entity_name",
+        "reporting_scope",
+        "currency",
+        "unit",
+        "total_assets",
+        "total_capital_and_liabilities"
+      ],
+      "line_items_count": 4,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_liabilities + total_equity \u2248 total_assets",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2017.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 54108,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "cash_acquired_on_amalgamation",
+        "closing_cash",
+        "currency"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2018.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59811,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "closing_cash",
+        "cash_acquired_on_amalgamation",
+        "currency"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2019.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59906,
+      "extracted_fields_count": 8,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "opening_cash",
+        "net_change_in_cash",
+        "closing_cash",
+        "fx_translation_adjustment",
+        "currency"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2020.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 60031,
+      "extracted_fields_count": 8,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "closing_cash",
+        "currency"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2021.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "FAILED",
+      "overall_confidence": 0.875,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 43485,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "closing_cash",
+        "currency",
+        "consolidated_profit_before_tax"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "net_change_in_cash_check",
+          "status": "FAIL",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "calculated_value": -48963965,
+          "reported_value": 333324145,
+          "variance": -382288110,
+          "operands": {
+            "operating_cash_flow": 42476453,
+            "investing_cash_flow": -16808651,
+            "financing_cash_flow": -73213515,
+            "fx_translation_adjustment": -1418252
+          }
+        },
+        {
+          "check_name": "closing_cash_check",
+          "status": "PASS",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "calculated_value": 1212725264,
+          "reported_value": 1212725264,
+          "variance": 0,
+          "operands": {
+            "opening_cash": 879401119,
+            "net_change_in_cash": 333324145
+          }
+        },
+        {
+          "check_name": "net_change_in_cash_check",
+          "status": "PASS",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "calculated_value": 61224696,
+          "reported_value": 61224696,
+          "variance": 0,
+          "operands": {
+            "operating_cash_flow": -168690920,
+            "investing_cash_flow": -16169244,
+            "financing_cash_flow": 243944969,
+            "fx_translation_adjustment": 2139891
+          }
+        },
+        {
+          "check_name": "closing_cash_check",
+          "status": "PASS",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "calculated_value": 879401119,
+          "reported_value": 879401119,
+          "variance": 0,
+          "operands": {
+            "opening_cash": 818176423,
+            "net_change_in_cash": 61224696
+          }
+        }
+      ],
+      "failed_rules": [
+        "net_change_in_cash_check"
+      ],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2022.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": false,
+      "processing_time_ms": 59202,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "closing_cash",
+        "currency",
+        "consolidated_profit_before_income_tax"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2023.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59389,
+      "extracted_fields_count": 8,
+      "extracted_key_fields": [
+        "currency",
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "closing_cash"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2024.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59344,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "cash_acquired_on_amalgamation",
+        "closing_cash",
+        "currency"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2025.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59139,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "cash_acquired_on_amalgamation",
+        "closing_cash",
+        "currency"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "net_change_in_cash_check",
+          "status": "PASS",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "calculated_value": 21113.39,
+          "reported_value": 21113.39,
+          "variance": 0.0,
+          "operands": {
+            "operating_cash_flow": 127241.84,
+            "investing_cash_flow": -3850.64,
+            "financing_cash_flow": -102477.54,
+            "fx_translation_adjustment": 199.73
+          }
+        },
+        {
+          "check_name": "closing_cash_check",
+          "status": "PASS",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "calculated_value": 249947.9,
+          "reported_value": 249947.9,
+          "variance": 0.0,
+          "operands": {
+            "opening_cash": 228834.51,
+            "net_change_in_cash": 21113.39
+          }
+        },
+        {
+          "check_name": "net_change_in_cash_check",
+          "status": "PASS",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "calculated_value": 20504.99,
+          "reported_value": 20504.99,
+          "variance": -0.0,
+          "operands": {
+            "operating_cash_flow": 19069.34,
+            "investing_cash_flow": 5313.77,
+            "financing_cash_flow": -3983.06,
+            "fx_translation_adjustment": 104.94
+          }
+        },
+        {
+          "check_name": "closing_cash_check",
+          "status": "PASS",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "calculated_value": 228834.51,
+          "reported_value": 228834.51,
+          "variance": -0.0,
+          "operands": {
+            "opening_cash": 197147.81,
+            "net_change_in_cash": 20504.99,
+            "cash_acquired_on_amalgamation": 11181.71
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Cash Flow Statement 2026.pdf",
+      "document_type": "cash_flow_statement",
+      "folder": "cash_flow",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59250,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "operating_cash_flow",
+        "investing_cash_flow",
+        "financing_cash_flow",
+        "fx_translation_adjustment",
+        "net_change_in_cash",
+        "opening_cash",
+        "closing_cash",
+        "currency",
+        "statement_title",
+        "period"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "operating + investing + financing (+ fx adjustment)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "opening_cash + net_change_in_cash (+ other adjustments)",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "20251118_000612.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59686,
+      "extracted_fields_count": 14,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "customer_name",
+        "customer_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "discount",
+        "total_amount",
+        "vendor_gstin",
+        "bank_details"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal + tax_amount - discount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X00016469619.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 1.0,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59906,
+      "extracted_fields_count": 18,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "customer_name",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_inclusive",
+        "discount",
+        "total_amount",
+        "cash_paid",
+        "change",
+        "time",
+        "cashier",
+        "location_sp",
+        "mb",
+        "room_no"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 60.31,
+          "reported_value": 60.3,
+          "variance": 0.01,
+          "operands": {
+            "subtotal": 65.9,
+            "discount": -5.59,
+            "tax_amount": 0
+          }
+        },
+        {
+          "check_name": "cash_change_check",
+          "status": "PASS",
+          "formula": "cash_paid - total_amount",
+          "calculated_value": 10.0,
+          "reported_value": 10,
+          "variance": 0.0,
+          "operands": {
+            "cash_paid": 70.3,
+            "total_amount": -60.3
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51005361895.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8333,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 55968,
+      "extracted_fields_count": 11,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "sum(line_item.amount)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal - discount (tax inclusive)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "cash_paid - total_amount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51005663293.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 50594,
+      "extracted_fields_count": 16,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change",
+        "gst_reg_no",
+        "table_number",
+        "pax",
+        "cashier"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal + tax_amount - discount",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "cash_paid - total_amount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51005719883.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59625,
+      "extracted_fields_count": 16,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change",
+        "gst_id",
+        "reg_number",
+        "transaction_time",
+        "register_number"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 108.5,
+          "reported_value": 108.5,
+          "variance": 0.0,
+          "operands": {
+            "subtotal": 102.36,
+            "discount": 0.0,
+            "tax_amount": 6.14
+          }
+        },
+        {
+          "check_name": "cash_change_check",
+          "status": "PASS",
+          "formula": "cash_paid - total_amount",
+          "calculated_value": 41.5,
+          "reported_value": 41.5,
+          "variance": 0.0,
+          "operands": {
+            "cash_paid": 150.0,
+            "total_amount": -108.5
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51005757342.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 73264,
+      "extracted_fields_count": 12,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change"
+      ],
+      "line_items_count": 2,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "sum(line_item.amount)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal - discount (tax inclusive)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "cash_paid - total_amount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51005806685.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8333,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 60546,
+      "extracted_fields_count": 11,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "line_item_1_check",
+          "status": "NOT_APPLICABLE",
+          "formula": "quantity * unit_price",
+          "calculated_value": null,
+          "reported_value": 29.0,
+          "variance": null,
+          "operands": {
+            "quantity": null,
+            "unit_price": 29.0
+          }
+        },
+        {
+          "check_name": "line_items_sum_to_total",
+          "status": "PASS",
+          "formula": "sum(line_item.amount)",
+          "calculated_value": 29.0,
+          "reported_value": 29.0,
+          "variance": 0.0,
+          "operands": {
+            "sum_of_line_items": 29.0
+          }
+        },
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 29.0,
+          "reported_value": 29.0,
+          "variance": 0.0,
+          "operands": {
+            "subtotal": 27.36,
+            "discount": 0.0,
+            "tax_amount": 1.64
+          }
+        },
+        {
+          "check_name": "cash_change_check",
+          "status": "PASS",
+          "formula": "cash_paid - total_amount",
+          "calculated_value": 21.0,
+          "reported_value": 21.0,
+          "variance": 0.0,
+          "operands": {
+            "cash_paid": 50.0,
+            "total_amount": -29.0
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51006328913.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "FAILED",
+      "overall_confidence": 0.6111,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 58875,
+      "extracted_fields_count": 11,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "customer_name",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "line_item_1_check",
+          "status": "FAIL",
+          "formula": "quantity * unit_price",
+          "calculated_value": 165.0,
+          "reported_value": 105.0,
+          "variance": 60.0,
+          "operands": {
+            "quantity_x_unit_price": 165.0
+          }
+        },
+        {
+          "check_name": "line_items_sum_to_subtotal",
+          "status": "PASS",
+          "formula": "sum(line_item.amount)",
+          "calculated_value": 105.0,
+          "reported_value": 105.0,
+          "variance": 0.0,
+          "operands": {
+            "sum_of_line_items": 105.0
+          }
+        },
+        {
+          "check_name": "invoice_total_check",
+          "status": "FAIL",
+          "formula": "subtotal + shipping - discount (tax inclusive)",
+          "calculated_value": 105.0,
+          "reported_value": 165.0,
+          "variance": -60.0,
+          "operands": {
+            "subtotal": 105.0,
+            "discount": 0.0
+          }
+        },
+        {
+          "check_name": "cash_change_check",
+          "status": "NOT_APPLICABLE",
+          "formula": "cash_paid - total_amount",
+          "calculated_value": null,
+          "reported_value": null,
+          "variance": null,
+          "operands": {
+            "cash_paid": 165.6,
+            "total_amount": -165.0
+          }
+        }
+      ],
+      "failed_rules": [
+        "line_item_1_check",
+        "invoice_total_check"
+      ],
+      "warnings": []
+    },
+    {
+      "document_name": "X51006334741.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 50719,
+      "extracted_fields_count": 15,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change",
+        "gst_reg_no",
+        "counter",
+        "ref_no"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal - discount (tax inclusive)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "cash_paid - total_amount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51006387931.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 57719,
+      "extracted_fields_count": 12,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "change"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "sum(line_item.amount)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal - discount (tax inclusive)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "cash_paid - total_amount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51008099043.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.6667,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 61125,
+      "extracted_fields_count": 13,
+      "extracted_key_fields": [
+        "vendor_name",
+        "vendor_address",
+        "gst_registration_number",
+        "invoice_number",
+        "invoice_date",
+        "subtotal",
+        "tax_rate",
+        "tax_amount",
+        "total_excluding_tax",
+        "total_including_tax",
+        "final_total",
+        "currency",
+        "tender_amount"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51008099071.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 58796,
+      "extracted_fields_count": 14,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid",
+        "company_number",
+        "phone_number",
+        "gst_number",
+        "pre_auth_code"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal + tax_amount - discount",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "cash_paid - total_amount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51008142038.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 48656,
+      "extracted_fields_count": 12,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "vendor_registration_number",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "cash_paid"
+      ],
+      "line_items_count": 2,
+      "validation_checks": [
+        {
+          "check_name": "line_item_1_check",
+          "status": "NOT_APPLICABLE",
+          "formula": "quantity * unit_price",
+          "calculated_value": null,
+          "reported_value": 4.4,
+          "variance": null,
+          "operands": {
+            "quantity": null,
+            "unit_price": 2.2
+          }
+        },
+        {
+          "check_name": "line_items_sum_to_total",
+          "status": "PASS",
+          "formula": "sum(line_item.amount)",
+          "calculated_value": 27.9,
+          "reported_value": 27.9,
+          "variance": 0.0,
+          "operands": {
+            "sum_of_line_items": 27.9
+          }
+        },
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 27.9,
+          "reported_value": 27.9,
+          "variance": 0.0,
+          "operands": {
+            "subtotal": 26.33,
+            "discount": 0.0,
+            "tax_amount": 1.57
+          }
+        },
+        {
+          "check_name": "cash_change_check",
+          "status": "NOT_APPLICABLE",
+          "formula": "cash_paid - total_amount",
+          "calculated_value": null,
+          "reported_value": null,
+          "variance": null,
+          "operands": {
+            "cash_paid": 28.0,
+            "total_amount": -27.9
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "X51008145450.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.9444,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 58608,
+      "extracted_fields_count": 13,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "discount",
+        "total_amount",
+        "cash_paid",
+        "change"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 85.2,
+          "reported_value": 85.2,
+          "variance": 0.0,
+          "operands": {
+            "subtotal": 85.2,
+            "discount": -0.0,
+            "tax_amount": 0.0
+          }
+        },
+        {
+          "check_name": "cash_change_check",
+          "status": "PASS",
+          "formula": "cash_paid - total_amount",
+          "calculated_value": 15.0,
+          "reported_value": 15.0,
+          "variance": 0.0,
+          "operands": {
+            "cash_paid": 100.2,
+            "total_amount": -85.2
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "batch1-1109.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.9444,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 45968,
+      "extracted_fields_count": 15,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "vendor_tax_id",
+        "vendor_iban",
+        "customer_name",
+        "customer_address",
+        "customer_tax_id",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 138.9,
+          "reported_value": 138.9,
+          "variance": 0.0,
+          "operands": {
+            "subtotal": 126.27,
+            "discount": 0.0,
+            "tax_amount": 12.63
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "batch2-0499.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.8889,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 51735,
+      "extracted_fields_count": 13,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "due_date",
+        "vendor_name",
+        "vendor_address",
+        "customer_name",
+        "customer_address",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "total_amount",
+        "shipping_and_handling",
+        "terms"
+      ],
+      "line_items_count": 5,
+      "validation_checks": [
+        {
+          "check_name": "line_item_1_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 16.0,
+          "reported_value": 16.0,
+          "variance": 0.0,
+          "operands": {
+            "quantity_x_unit_price": 16.0
+          }
+        },
+        {
+          "check_name": "line_item_2_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 56.0,
+          "reported_value": 56.0,
+          "variance": 0.0,
+          "operands": {
+            "quantity_x_unit_price": 56.0
+          }
+        },
+        {
+          "check_name": "line_item_3_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 30.0,
+          "reported_value": 30.0,
+          "variance": 0.0,
+          "operands": {
+            "quantity_x_unit_price": 30.0
+          }
+        },
+        {
+          "check_name": "line_item_4_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 28.0,
+          "reported_value": 28.0,
+          "variance": 0.0,
+          "operands": {
+            "quantity_x_unit_price": 28.0
+          }
+        },
+        {
+          "check_name": "line_item_5_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 15.0,
+          "reported_value": 15.0,
+          "variance": 0.0,
+          "operands": {
+            "quantity_x_unit_price": 15.0
+          }
+        },
+        {
+          "check_name": "line_items_sum_to_total",
+          "status": "PASS",
+          "formula": "sum(line_item.amount) + tax",
+          "calculated_value": 157.48,
+          "reported_value": 157.48,
+          "variance": 0.0,
+          "operands": {
+            "sum_of_line_items": 145.0,
+            "tax_amount": 12.48
+          }
+        },
+        {
+          "check_name": "invoice_total_check",
+          "status": "PASS",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 157.48,
+          "reported_value": 157.48,
+          "variance": 0.0,
+          "operands": {
+            "subtotal": 135.0,
+            "discount": 0.0,
+            "tax_amount": 12.48,
+            "shipping": 10.0
+          }
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "batch2-0999.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "FAILED",
+      "overall_confidence": 0.7444,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59125,
+      "extracted_fields_count": 14,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "due_date",
+        "vendor_name",
+        "vendor_address",
+        "customer_name",
+        "customer_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "shipping_handling"
+      ],
+      "line_items_count": 3,
+      "validation_checks": [
+        {
+          "check_name": "line_item_1_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 346.0,
+          "reported_value": 346.0,
+          "variance": 0.0,
+          "operands": {
+            "unit_price_is_line_total": 346.0
+          }
+        },
+        {
+          "check_name": "line_item_2_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 226.0,
+          "reported_value": 226.0,
+          "variance": 0.0,
+          "operands": {
+            "unit_price_is_line_total": 226.0
+          }
+        },
+        {
+          "check_name": "line_item_3_check",
+          "status": "PASS",
+          "formula": "quantity * unit_price",
+          "calculated_value": 136.0,
+          "reported_value": 136.0,
+          "variance": 0.0,
+          "operands": {
+            "unit_price_is_line_total": 136.0
+          }
+        },
+        {
+          "check_name": "line_items_sum_to_subtotal",
+          "status": "FAIL",
+          "formula": "sum(line_item.amount)",
+          "calculated_value": 708.0,
+          "reported_value": 804,
+          "variance": -96.0,
+          "operands": {
+            "sum_of_line_items": 708.0
+          }
+        },
+        {
+          "check_name": "invoice_total_check",
+          "status": "FAIL",
+          "formula": "subtotal + tax_amount + shipping - discount",
+          "calculated_value": 867.47,
+          "reported_value": 916.47,
+          "variance": -49.0,
+          "operands": {
+            "subtotal": 804,
+            "discount": 0.0,
+            "tax_amount": 63.47
+          }
+        }
+      ],
+      "failed_rules": [
+        "line_items_sum_to_subtotal",
+        "invoice_total_check"
+      ],
+      "warnings": []
+    },
+    {
+      "document_name": "batch3-1354.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.9444,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59671,
+      "extracted_fields_count": 15,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "vendor_name",
+        "vendor_address",
+        "customer_name",
+        "customer_address",
+        "currency",
+        "subtotal",
+        "tax_amount",
+        "tax_rate",
+        "tax_inclusive",
+        "total_amount",
+        "customer_account",
+        "customer_po",
+        "order_date"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal + tax_amount - discount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "batch3-1445.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.9444,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59921,
+      "extracted_fields_count": 16,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "due_date",
+        "vendor_name",
+        "vendor_address",
+        "vendor_phone",
+        "customer_name",
+        "customer_address",
+        "currency",
+        "reference",
+        "notes",
+        "subtotal",
+        "tax_amount",
+        "total_amount",
+        "amount_paid",
+        "amount_due"
+      ],
+      "line_items_count": 1,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "sum(line_item.amount)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "subtotal + tax_amount - discount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "batch3-1495.jpg",
+      "document_type": "invoice",
+      "folder": "invoices",
+      "processing_status": "PASS",
+      "overall_confidence": 0.7778,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 58672,
+      "extracted_fields_count": 8,
+      "extracted_key_fields": [
+        "invoice_number",
+        "invoice_date",
+        "customer_address",
+        "currency",
+        "subtotal",
+        "total_amount",
+        "notes",
+        "ticket_completed_date"
+      ],
+      "line_items_count": 4,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "quantity * unit_price",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "sum(line_item.amount)",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "subtotal + tax_amount - discount",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": []
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2017.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.9,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59891,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "operating_expenses",
+        "provisions_and_contingencies",
+        "total_expenditure",
+        "net_profit_before_minority_interest",
+        "minority_interest",
+        "share_in_profits_ofassociates"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2018.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.95,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59281,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "operating_expenses",
+        "provisions_and_contingencies",
+        "total_expenditure",
+        "net_profit_before_minority_interest",
+        "minority_interest"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2019.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.95,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59625,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "operating_expenses",
+        "net_profit",
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "provisions_and_contingencies",
+        "total_expenditure",
+        "net_profit_before_minority_interest"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2020.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.85,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59781,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "revenue",
+        "operating_expenses",
+        "tax",
+        "net_profit",
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "provisions_and_contingencies"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2021.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.85,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59827,
+      "extracted_fields_count": 8,
+      "extracted_key_fields": [
+        "operating_expenses",
+        "net_profit",
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "provisions_and_contingencies"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2022.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.85,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59328,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "currency",
+        "revenue",
+        "operating_expenses",
+        "net_profit",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "provisions_and_contingencies"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2023.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.95,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 59468,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "operating_expenses",
+        "provisions_and_contingencies",
+        "total_expenditure",
+        "net_profit_before_minority_interest"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2024.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.85,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 48531,
+      "extracted_fields_count": 9,
+      "extracted_key_fields": [
+        "revenue",
+        "operating_expenses",
+        "net_profit",
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "provisions_and_contingencies"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2025.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.95,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 61734,
+      "extracted_fields_count": 10,
+      "extracted_key_fields": [
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "operating_expenses",
+        "provisions_and_contingencies",
+        "total_expenditure",
+        "net_profit_before_minority_interest",
+        "minority_interest",
+        "net_profit_after_minority_interest"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "current_profit + brought_forward_profit",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "current_profit + brought_forward_profit",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    },
+    {
+      "document_name": "Consolidated Profit & Loss 2026.pdf",
+      "document_type": "profit_and_loss",
+      "folder": "profit_and_loss",
+      "processing_status": "PASS",
+      "overall_confidence": 0.95,
+      "file_validation_status": "PASS",
+      "ocr_used": true,
+      "processing_time_ms": 60125,
+      "extracted_fields_count": 11,
+      "extracted_key_fields": [
+        "operating_expenses",
+        "net_profit",
+        "currency",
+        "interest_earned",
+        "other_income",
+        "total_income",
+        "interest_expended",
+        "provisions_and_contingencies",
+        "total_expenditure",
+        "net_profit_before_minority_interest",
+        "minority_interest_expense"
+      ],
+      "line_items_count": 0,
+      "validation_checks": [
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_earned + other_income",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "interest_expended + operating_expenses + provisions_and_contingencies",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "PASS",
+          "description": "",
+          "formula": "total_income - total_expenditure",
+          "discrepancy": null
+        },
+        {
+          "check_name": "unknown",
+          "status": "NOT_APPLICABLE",
+          "description": "",
+          "formula": "profit_before_minority_interest - minority_interest",
+          "discrepancy": null
+        }
+      ],
+      "failed_rules": [],
+      "warnings": [
+        "No statement line items were detected either via table-grid OCR or the LLM pass."
+      ]
+    }
+  ]
+}
