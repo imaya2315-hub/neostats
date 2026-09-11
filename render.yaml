@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: docintel-platform
+    env: python
+    plan: free
+    branch: main
+    autoDeploy: true
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --app-dir backend
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: APP_NAME
+        value: Document Intelligence Platform
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: GROQ_MODEL
+        value: qwen/qwen3.8-27b
+      - key: LLM_MAX_TOKENS
+        value: "1000"
+      - key: LLM_TIMEOUT_SECONDS
+        value: "60"
+      - key: VALIDATION_ABS_TOLERANCE
+        value: "1.0"
+      - key: VALIDATION_PCT_TOLERANCE
+        value: "0.01"
+      - key: GROQ_API_KEY
+        sync: false
