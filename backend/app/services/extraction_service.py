@@ -140,33 +140,35 @@ def _build_user_prompt(document_type: str, page_texts: list[str]) -> str:
 
 def _call_llm(document_type: str, page_texts: list[str]) -> dict:
     settings = get_settings()
-    if not settings.ANTHROPIC_API_KEY:
+    if not settings.GROQ_API_KEY:
         raise ExtractionError(
-            "LLM_NOT_CONFIGURED: ANTHROPIC_API_KEY is not set; field extraction cannot run."
+            "LLM_NOT_CONFIGURED: GROQ_API_KEY is not set; field extraction cannot run."
         )
 
     try:
-        import anthropic
+        from groq import Groq
     except ImportError as exc:  # pragma: no cover - dependency issue
-        raise ExtractionError(f"Anthropic SDK not installed: {exc}") from exc
+        raise ExtractionError(f"Groq SDK not installed: {exc}") from exc
 
-    client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY, timeout=settings.LLM_TIMEOUT_SECONDS)
+    client = Groq(api_key=settings.GROQ_API_KEY, timeout=settings.LLM_TIMEOUT_SECONDS)
     user_prompt = _build_user_prompt(document_type, page_texts)
 
     try:
-        response = client.messages.create(
-            model=settings.ANTHROPIC_MODEL,
+        response = client.chat.completions.create(
+            model=settings.GROQ_MODEL,
             max_tokens=settings.LLM_MAX_TOKENS,
-            system=_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": user_prompt}],
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": _SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
         )
     except Exception as exc:  # noqa: BLE001 - normalize all provider failures
         logger.exception("LLM call failed for document_type=%s", document_type)
         raise ExtractionError(f"LLM_CALL_FAILED: {exc}") from exc
 
-    raw_text = "".join(block.text for block in response.content if getattr(block, "type", None) == "text")
+    raw_text = response.choices[0].message.content or ""
     return _parse_llm_json(raw_text)
-
 
 def _parse_llm_json(raw_text: str) -> dict:
     cleaned = raw_text.strip()
@@ -272,4 +274,4 @@ def extract(document_type: str, artifacts: list[PageArtifact]) -> ExtractionOutc
     }
 
     settings = get_settings()
-    return ExtractionOutcome(data=data, llm_model=settings.ANTHROPIC_MODEL, warnings=warnings)
+    return ExtractionOutcome(data=data, llm_model=settings.GROQ_MODEL, warnings=warnings)
