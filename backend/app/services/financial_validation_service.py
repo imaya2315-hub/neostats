@@ -147,12 +147,9 @@ def _value_for_period(
     )
 
 
-def _validate_invoice(
-    fields: dict,
-    line_items: list[dict],
-) -> dict:
-    checks = []
-    issues = []
+def _validate_invoice(data: dict) -> list[dict]:
+    fields = data.get("fields", {}) or {}
+    line_items = data.get("line_items", []) or []
 
     def value(name):
         field = fields.get(name)
@@ -165,7 +162,9 @@ def _validate_invoice(
             return float(v)
         return None
 
-    def check_line_item(index, item):
+    checks = []
+
+    for index, item in enumerate(line_items, start=1):
         quantity = num(item.get("quantity"))
         unit_price = num(item.get("unit_price"))
         amount = num(item.get("amount"))
@@ -188,17 +187,13 @@ def _validate_invoice(
                         f"quantity × unit price: expected {calculated}, "
                         f"reported {amount}."
                     )
-            else:
-                status = "NOT_APPLICABLE"
-                message = "Line item amount is not present."
-
         else:
             message = (
                 "Required field(s) not present in document: "
                 "quantity_x_unit_price"
             )
 
-        return {
+        checks.append({
             "name": f"line_item_{index}_check",
             "formula": "quantity * unit_price",
             "operands": {
@@ -210,79 +205,55 @@ def _validate_invoice(
             "status": status,
             "period": None,
             "message": message,
-        }
+        })
 
-    for index, item in enumerate(line_items, start=1):
-        check = check_line_item(index, item)
-        checks.append(check)
+    amounts = []
 
-        if check["status"] == "FAIL":
-            issues.append(
-                f'{check["name"]}: {check["message"]}'
-            )
-
-    amounts = [
-        num(item.get("amount"))
-        for item in line_items
-        if num(item.get("amount")) is not None
-    ]
+    for item in line_items:
+        amount = num(item.get("amount"))
+        if amount is not None:
+            amounts.append(amount)
 
     subtotal = num(value("subtotal"))
 
-    if amounts:
+    if amounts and subtotal is not None:
         line_item_sum = round(sum(amounts), 2)
+        variance = round(line_item_sum - subtotal, 2)
+        status = "PASS" if abs(variance) <= 0.05 else "FAIL"
 
-        if subtotal is not None:
-            variance = round(line_item_sum - subtotal, 2)
-            status = "PASS" if abs(variance) <= 0.05 else "FAIL"
-
-            checks.append({
-                "name": "line_items_sum_to_subtotal",
-                "formula": "sum(line_item.amount)",
-                "operands": {
-                    "sum_of_line_items": line_item_sum
-                },
-                "calculated_value": line_item_sum,
-                "reported_value": subtotal,
-                "variance": variance,
-                "status": status,
-                "period": None,
-                "message": None,
-            })
-
-            if status == "FAIL":
-                issues.append(
-                    f"line_items_sum_to_subtotal: "
-                    f"reported {subtotal} vs calculated "
-                    f"{line_item_sum} (variance {variance})"
-                )
-        else:
-            checks.append({
-                "name": "line_items_sum_to_subtotal",
-                "formula": "sum(line_item.amount)",
-                "operands": {
-                    "sum_of_line_items": line_item_sum
-                },
-                "calculated_value": line_item_sum,
-                "reported_value": None,
-                "variance": None,
-                "status": "NOT_APPLICABLE",
-                "period": None,
-                "message": "Subtotal is not present.",
-            })
+        checks.append({
+            "name": "line_items_sum_to_subtotal",
+            "formula": "sum(line_item.amount)",
+            "operands": {
+                "sum_of_line_items": line_item_sum
+            },
+            "calculated_value": line_item_sum,
+            "reported_value": subtotal,
+            "variance": variance,
+            "status": status,
+            "period": None,
+            "message": None,
+        })
     else:
         checks.append({
             "name": "line_items_sum_to_subtotal",
             "formula": "sum(line_item.amount)",
             "operands": {
-                "sum_of_line_items": None
+                "sum_of_line_items": (
+                    round(sum(amounts), 2) if amounts else None
+                )
             },
-            "calculated_value": None,
+            "calculated_value": (
+                round(sum(amounts), 2) if amounts else None
+            ),
             "reported_value": subtotal,
             "variance": None,
             "status": "NOT_APPLICABLE",
             "period": None,
-            "message": "No line item amounts are available.",
+            "message": (
+                "Required field(s) not present in document: "
+                "reported_value"
+            ),
         })
 
     tax = num(value("tax_amount"))
@@ -294,19 +265,15 @@ def _validate_invoice(
 
         calculated_total = round(
             subtotal + tax - effective_discount,
-            2,
+            2
         )
 
         variance = round(
             calculated_total - total,
-            2,
+            2
         )
 
-        status = (
-            "PASS"
-            if abs(variance) <= 0.05
-            else "FAIL"
-        )
+        status = "PASS" if abs(variance) <= 0.05 else "FAIL"
 
         checks.append({
             "name": "invoice_total_check",
@@ -323,25 +290,7 @@ def _validate_invoice(
             "period": None,
             "message": None,
         })
-
-        if status == "FAIL":
-            issues.append(
-                f"invoice_total_check: "
-                f"reported {total} vs calculated "
-                f"{calculated_total} (variance {variance})"
-            )
     else:
-        missing = []
-
-        if subtotal is None:
-            missing.append("subtotal")
-
-        if tax is None:
-            missing.append("tax_amount")
-
-        if total is None:
-            missing.append("total_amount")
-
         checks.append({
             "name": "invoice_total_check",
             "formula": "subtotal + tax_amount - discount",
@@ -356,8 +305,8 @@ def _validate_invoice(
             "status": "NOT_APPLICABLE",
             "period": None,
             "message": (
-                "Required field(s) not present in document: "
-                + ", ".join(missing)
+                "Invoice total cannot be deterministically "
+                "validated from the available fields."
             ),
         })
 
@@ -367,13 +316,13 @@ def _validate_invoice(
     if cash_paid is not None and total is not None:
         calculated_change = round(
             cash_paid - total,
-            2,
+            2
         )
 
         if change is not None:
             variance = round(
                 calculated_change - change,
-                2,
+                2
             )
 
             status = (
@@ -386,10 +335,9 @@ def _validate_invoice(
 
             if status == "FAIL":
                 message = (
-                    f"Extracted change does not match "
-                    f"cash paid minus invoice total: "
-                    f"expected {calculated_change}, "
-                    f"reported {change}."
+                    f"Extracted change does not match cash paid "
+                    f"minus invoice total: expected "
+                    f"{calculated_change}, reported {change}."
                 )
 
             checks.append({
@@ -406,14 +354,6 @@ def _validate_invoice(
                 "period": None,
                 "message": message,
             })
-
-            if status == "FAIL":
-                issues.append(
-                    f"cash_change_check: "
-                    f"reported {change} vs calculated "
-                    f"{calculated_change} "
-                    f"(variance {variance})"
-                )
         else:
             checks.append({
                 "name": "cash_change_check",
@@ -448,17 +388,7 @@ def _validate_invoice(
             ),
         })
 
-    overall_status = (
-        "FAIL"
-        if issues
-        else "PASS"
-    )
-
-    return {
-        "checks": checks,
-        "overall_status": overall_status,
-        "issues": issues,
-    }
+    return checks
 
 def _validate_balance_sheet(
     extracted: dict,
