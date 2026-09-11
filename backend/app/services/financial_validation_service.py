@@ -377,7 +377,7 @@ else:
         ),
     })
 
-    return checks
+return checks
 
 def _validate_balance_sheet(
     extracted: dict,
@@ -453,7 +453,7 @@ def _validate_balance_sheet(
             )
         )
 
-    return checks
+        return checks
 
 
 def _validate_profit_and_loss(
