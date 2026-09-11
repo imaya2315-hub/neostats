@@ -438,7 +438,79 @@ def _table_to_statement_items(
         )
 
     return items
+def _recover_invoice_subtotal(
+    fields: dict,
+    line_items: list[dict],
+    warnings: list[str],
+) -> None:
+    """
+    Recover/repair subtotal using line-item amounts.
 
+    Rules:
+    1. If subtotal is missing, derive it from line items.
+    2. If subtotal exists but is clearly inconsistent with the
+       line-item sum, replace it with the line-item sum.
+    3. Never use an unrelated OCR number as the subtotal.
+    """
+
+    if not line_items:
+        return
+
+    amounts = []
+
+    for item in line_items:
+        amount = item.get("amount")
+
+        if isinstance(amount, (int, float)):
+            amounts.append(float(amount))
+
+    if not amounts:
+        return
+
+    line_item_total = round(
+        sum(amounts),
+        2,
+    )
+
+    subtotal_field = fields.get("subtotal")
+
+    current_subtotal = None
+
+    if isinstance(subtotal_field, dict):
+        value = subtotal_field.get("value")
+
+        if isinstance(value, (int, float)):
+            current_subtotal = float(value)
+
+    if current_subtotal is None:
+        fields["subtotal"] = {
+            "value": line_item_total,
+            "source_text": (
+                "Derived from the sum of extracted line-item amounts"
+            ),
+            "page_number": None,
+        }
+
+        warnings.append(
+            "Subtotal was missing; recovered from line-item amounts."
+        )
+
+        return
+
+    if abs(current_subtotal - line_item_total) > 0.05:
+        fields["subtotal"] = {
+            "value": line_item_total,
+            "source_text": (
+                "Derived from the sum of extracted line-item amounts "
+                f"(original extracted subtotal: {current_subtotal})"
+            ),
+            "page_number": None,
+        }
+
+        warnings.append(
+            "Extracted subtotal was inconsistent with line items; "
+            "recovered subtotal from line-item amounts."
+        )
 
 def _validate_extracted_payment_fields(
     fields: dict,
@@ -502,7 +574,6 @@ def extract(
         for a in artifacts
     ]
 
-    # LLM extraction.
     llm_json = _call_llm(
         document_type,
         page_texts,
@@ -513,7 +584,6 @@ def extract(
         {},
     ) or {}
 
-    # Normalize fields.
     for name, field in fields.items():
 
         if not isinstance(field, dict):
@@ -538,7 +608,6 @@ def extract(
                 page_texts,
             )
 
-    # Normalize invoice line items.
     line_items = llm_json.get(
         "line_items",
         [],
@@ -555,14 +624,18 @@ def extract(
                     item[key]
                 )
 
-    # Detect extraction inconsistencies without changing extracted values.
     if document_type == "invoice":
+        _recover_invoice_subtotal(
+            fields,
+            line_items,
+            warnings,
+        )
+
         _validate_extracted_payment_fields(
             fields,
             warnings,
         )
 
-    # Deterministic table extraction for financial statements.
     statement_line_items: list[dict] = []
 
     period_headers: list[str] = (
