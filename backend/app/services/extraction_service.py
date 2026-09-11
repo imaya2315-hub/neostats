@@ -516,52 +516,69 @@ def _validate_extracted_payment_fields(
     fields: dict,
     warnings: list[str],
 ) -> None:
-    """
-    Detect suspicious payment extraction without modifying the values.
+    cash_paid_field = fields.get("cash_paid")
+    total_amount_field = fields.get("total_amount")
+    change_field = fields.get("change")
 
-    Financial validation remains authoritative. These warnings only make
-    extraction problems visible.
-    """
-
-    cash_paid = fields.get("cash_paid", {})
-    total = fields.get("total_amount", {})
-    change = fields.get("change", {})
-
-    cash_value = (
-        cash_paid.get("value")
-        if isinstance(cash_paid, dict)
+    cash_paid = (
+        cash_paid_field.get("value")
+        if isinstance(cash_paid_field, dict)
         else None
     )
 
-    total_value = (
-        total.get("value")
-        if isinstance(total, dict)
+    total_amount = (
+        total_amount_field.get("value")
+        if isinstance(total_amount_field, dict)
         else None
     )
 
-    change_value = (
-        change.get("value")
-        if isinstance(change, dict)
+    change = (
+        change_field.get("value")
+        if isinstance(change_field, dict)
         else None
     )
 
     if (
-        isinstance(cash_value, (int, float))
-        and isinstance(total_value, (int, float))
-        and isinstance(change_value, (int, float))
+        isinstance(cash_paid, (int, float))
+        and isinstance(total_amount, (int, float))
     ):
         expected_change = round(
-            cash_value - total_value,
+            cash_paid - total_amount,
             2,
         )
 
-        if abs(expected_change - change_value) > 0.01:
-            warnings.append(
-                "Extracted change conflicts with cash_paid - total_amount: "
-                f"expected {expected_change}, extracted {change_value}."
-            )
+        if expected_change >= 0:
 
+            if not isinstance(change, (int, float)):
+                fields["change"] = {
+                    "value": expected_change,
+                    "source_text": (
+                        "Derived from cash paid minus total amount"
+                    ),
+                    "page_number": None,
+                }
 
+                warnings.append(
+                    "Change was missing; derived from "
+                    "cash_paid - total_amount."
+                )
+
+            elif abs(change - expected_change) > 0.05:
+                original_change = change
+
+                fields["change"] = {
+                    "value": expected_change,
+                    "source_text": (
+                        "Derived from cash paid minus total amount"
+                    ),
+                    "page_number": None,
+                }
+
+                warnings.append(
+                    "Extracted change was inconsistent with "
+                    f"cash_paid - total_amount; replaced "
+                    f"{original_change} with {expected_change}."
+                )
 def extract(
     document_type: str,
     artifacts: list[PageArtifact],
