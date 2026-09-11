@@ -147,7 +147,7 @@ def _value_for_period(
     )
 
 
-def validate_invoice_financials(
+def validate_invoice(
     fields: dict,
     line_items: list[dict],
 ) -> dict:
