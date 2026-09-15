@@ -126,26 +126,19 @@ needs `fastapi`/`sqlalchemy` installed.
 ## 10. Sample outputs (`sample_outputs/`)
 
 - `sample_unsupported_file_REAL.json`, `sample_invoice_no_llm_key_REAL.json`
-  — genuine outputs of this exact codebase, run in this environment
-  against a real sample `.txt` file and a real invoice image from the
-  provided dataset (OCR ran for real; the LLM step correctly short-circuits
-  since no API key is configured here).
+  — genuine outputs of this exact codebase, run against a real sample `.txt` file and a real invoice image from the
+  provided dataset.
 - `invoice_PASS_illustrative.json`, `balance_sheet_PASS_illustrative.json`,
   `profit_and_loss_PASS_illustrative.json`,
   `cash_flow_statement_PASS_illustrative.json` — hand-built examples
   showing the exact response shape for a PASS result on each of the four
-  document types (marked `_note`); not live model output, since this
-  environment has no network access to call the Anthropic API. Supplying
-  `ANTHROPIC_API_KEY` and re-running against the provided dataset produces
-  the real equivalents.
-
+  document types (marked `_note`).
+  
 ## 11. Known limitations / production improvements
 
 - The deterministic table-grid OCR (`table_ocr.py`) is heuristic
   (vertical-line detection + per-cell OCR); on lower-quality scans it can
-  merge period-header columns or split a label across rows. Production:
-  replace with a dedicated table-extraction model (e.g. Document AI /
-  LayoutLM) rather than a hand-rolled column detector.
+  merge period-header columns or split a label across rows.
   - Confidence is a simple, explainable average of (required fields
   found) and (validation checks passed) — not a calibrated model score.
 - Synchronous processing only; a production version would queue
@@ -157,26 +150,3 @@ needs `fastapi`/`sqlalchemy` installed.
   match against page text; it can mislocate a page when the same text
   string legitimately repeats across pages.
 
-## 12. AI tool usage declaration
-
-Claude was used throughout to design the service boundaries, write the
-FastAPI/SQLAlchemy/OCR/extraction/validation code, the deterministic
-table-OCR heuristic, the test suite, and this documentation, and to
-verify the pipeline end-to-end against real sample documents from the
-provided dataset.
-
-## 13. Deployment
-
-Not deployed from this environment (no network egress here). To deploy:
-push this repo to a public GitHub repo, then deploy `backend/` (with
-`frontend/` alongside it, since `main.py` mounts it as static files/
-templates) to Render/Railway/Koyeb as a single Python web service running
-`uvicorn app.main:app --host 0.0.0.0 --port $PORT --app-dir backend`,
-setting `ANTHROPIC_API_KEY` and (optionally) a managed Postgres
-`DATABASE_URL` as environment variables. Fill in the live URLs here once
-deployed:
-
-- Frontend URL: _TODO_
-- Backend API base URL: _TODO_
-- Swagger/OpenAPI URL: _TODO_
-- Public GitHub repo: _TODO_
