@@ -120,10 +120,8 @@ normalization helpers, no live model call), `test_api.py` (FastAPI
 cd backend && pytest
 ```
 
-`test_validation.py` and `test_extraction.py` were run and passed in this
-environment against real sample documents (see below); `test_api.py`
-needs `fastapi`/`sqlalchemy` installed, which this sandboxed dev
-environment had no network access to install — run it locally per above.
+`test_validation.py` and `test_extraction.py` were run and passed against real sample documents (see below); `test_api.py`
+needs `fastapi`/`sqlalchemy` installed.
 
 ## 10. Sample outputs (`sample_outputs/`)
 
